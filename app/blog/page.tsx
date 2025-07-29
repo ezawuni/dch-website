@@ -1,5 +1,6 @@
 export default function Blog() {
   return (
+    <></>
     <main className="max-w-3xl mx-auto py-16 px-4">
       <h1 className="text-4xl font-bold text-green-800 mb-8">
         Protecting Ghana’s Cocoa Children: Insights from an Endline Evaluation
