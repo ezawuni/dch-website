@@ -1,0 +1,13 @@
+export default function SecondPost() {
+  return (
+    <main className="max-w-3xl mx-auto py-16 px-4">
+      <h1 className="text-2xl font-bold text-green-800 mb-4">
+        Strengthening Ghana’s SMEs—Lessons from the Field
+      </h1>
+      <p className="mb-4 text-gray-700">
+        Ghana’s SME sector faced numerous challenges in recent years, from access to finance to capacity building. DCH supported local entrepreneurs through technical assistance programs, business clinics, and targeted market linkage support.
+      </p>
+      {/* Add more content, sections, etc. */}
+    </main>
+  );
+}

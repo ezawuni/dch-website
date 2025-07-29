@@ -1,0 +1,19 @@
+export default function BlogIndex() {
+  return (
+    <main className="max-w-3xl mx-auto py-16 px-4">
+      <h1 className="text-3xl font-bold mb-8">Blog</h1>
+      <ul className="space-y-4">
+        <li>
+          <a href="/blog/first-post" className="text-green-800 underline">
+            Protecting Ghana’s Cocoa Children: Insights from an Endline Evaluation
+          </a>
+        </li>
+        <li>
+          <a href="/blog/second-post" className="text-green-800 underline">
+            Strengthening Ghana’s SMEs—Lessons from the Field
+          </a>
+        </li>
+      </ul>
+    </main>
+  );
+}
