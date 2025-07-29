@@ -39,3 +39,31 @@ export default function Blog() {
     </main>
   );
 }
+<section className="mb-12">
+  <h2 className="text-2xl font-bold text-green-800 mb-3">
+    The Human Side of the Sahel Crisis—Resilience in Ghana’s Border Communities
+  </h2>
+  <p className="mb-3 text-gray-700">
+    In recent years, communities along Ghana’s northern border experienced the ripple effects of instability in the Sahel region. As displaced families crossed the border in search of safety, local residents stepped up to offer shelter and support, often stretching their own limited resources to help.
+  </p>
+  <p className="mb-3 text-gray-700">
+    Host families opened their doors and shared what they could, despite facing their own economic challenges. The humanitarian response was shaped not just by aid agencies, but by the resilience and compassion shown by these border communities. Their willingness to support displaced people, especially women and children, underscored the strength of social ties in the face of adversity.
+  </p>
+  <p className="mb-3 text-gray-900 font-semibold">
+    Key lesson: Long-term solutions for border communities required not only external assistance, but also investment in the social infrastructure that enabled these communities to respond and adapt.
+  </p>
+</section>
+<section className="mb-12">
+  <h2 className="text-2xl font-bold text-green-800 mb-3">
+    Strengthening Ghana’s SME Sector: Lessons from Field Engagement
+  </h2>
+  <p className="mb-3 text-gray-700">
+    In 2024, our team worked with small and medium-sized enterprises (SMEs) across Ghana to identify obstacles and co-create solutions for business growth. Through a series of field visits and collaborative workshops, we learned that access to finance and reliable market information remained core challenges.
+  </p>
+  <p className="mb-3 text-gray-700">
+    Despite these barriers, Ghanaian entrepreneurs consistently demonstrated adaptability and resourcefulness. Their drive to innovate—whether by adopting new digital tools or forming strategic partnerships—was a key factor in business resilience.
+  </p>
+  <p className="mb-3 text-gray-900 font-semibold">
+    Key lesson: Building sustainable SME growth requires hands-on support, knowledge sharing, and policies that reflect the lived realities of entrepreneurs on the ground.
+  </p>
+</section>
