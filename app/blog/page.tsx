@@ -68,3 +68,4 @@ export default function Blog() {
     Key lesson: Building sustainable SME growth requires hands-on support, knowledge sharing, and policies that reflect the lived realities of entrepreneurs on the ground.
   </p>
 </section>
+  </>
