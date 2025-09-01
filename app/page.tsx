@@ -71,6 +71,10 @@ const CLIENTS = [
   "GIZ",
   "Mastercard Foundation",
   "EU",
+  "Ministry of Finance",
+  "Ghana Enterprises Agency",
+  "Ministry of Tourism, Arts and Culture",
+  "Fairtrade Africa",
   "British Council",
 ];
 
@@ -82,13 +86,23 @@ const TESTIMONIALS = [
   },
   {
     quote:
-      "Dashboards helped us track delivery weekly and spot issues early. Useful and reliable.",
-    author: "Director, Government Agency",
+      "Working with DCH gave us more than just data. They helped us make sense of complex survey results, connected the dots for policy, and gave us a clear roadmap we could present to decision-makers with confidence.",
+    author: "PPME Director, Government Agency",
   },
   {
     quote:
-      "They combine rigor with empathy for real-world constraints. A rare, valuable mix.",
+      "We trusted DCH with an assignment that required both discretion and deep expertise. They handled sensitive issues with professionalism and still delivered a thorough, actionable report.” — Director, public agency.",
+    author: "Chief Director, Government Agency",
+  },
+  {
+    quote:
+      "What stood out was their balance of technical rigor and human approach. The DCH team engaged communities respectfully, while ensuring the data was robust enough to withstand donor scrutiny.",
     author: "Country Manager, International NGO",
+  },
+  {
+    quote:
+      "The health and safety and gender mainstreaming guidance wasn’t just box-ticking. It was practical, context-sensitive, and helped us change how we approach program design.",
+    author: "COperations Lead, agribusiness program (West Africa)",
   },
 ];
 
@@ -249,10 +263,10 @@ export default function Home() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <h2 className="text-center text-3xl font-bold text-emerald-800">Our Impact</h2>
           <div className="mt-10 grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-6">
-            <Counter to={15} label="Countries" />
-            <Counter to={120} label="Dashboards" />
-            <Counter to={50} label="Partners" />
-            <Counter to={1_000_000} label="People Reached" />
+            <Counter to={10} label="Countries" />
+            <Counter to={25} label="Dashboards" />
+            <Counter to={35} label="Partners" />
+            <Counter to={100_000} label="People Reached" />
           </div>
         </div>
       </section>
