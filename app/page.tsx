@@ -5,12 +5,12 @@ import type { RefObject } from "react";
 import { motion } from "framer-motion";
 
 /* -------------------- Trusted-by (placeholder logos + proof links) -------------------- */
-type Logo = { name: string; href: string; title?: string };
+type Logo = { name: string; href: string; title?: string; file?: string };
 const TRUST_LOGOS: Logo[] = [
   { name: "World Bank", href: "/case-studies/world-bank-program" },
   { name: "European Union", href: "/case-studies/eu-program" },
   { name: "UNICEF", href: "/case-studies/unicef-initiative" },
-  { name: "Fairtrade Africa",  href: "/case-studies/fairtrade-cocoa-climate", file: "fairtrade.svg" },
+  { name: "Fairtrade Africa", href: "/case-studies/fairtrade-cocoa-climate", file: "fairtrade.svg" },
 ];
 
 function PlaceholderMonochrome({ label }: { label: string }) {
@@ -197,14 +197,22 @@ export default function Home() {
       <section aria-labelledby="trusted-title" className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
         <h2 id="trusted-title" className="sr-only">Trusted by</h2>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 items-center">
-          {TRUST_LOGOS.map((logo, i) => (
+          {TRUST_LOGOS.map((logo) => (
             <a
               key={logo.name}
               href={logo.href}
               className="group grayscale hover:grayscale-0 focus:grayscale-0 transition rounded outline-none focus-visible:ring p-3 flex items-center justify-center bg-white"
               title={logo.title ?? `See proof: ${logo.name}`}
             >
-              <PlaceholderMonochrome label={logo.name} />
+              {logo.file ? (
+                <img
+                  src={`/logos/${logo.file}`}
+                  alt={`${logo.name} logo`}
+                  className="h-10 w-auto"
+                />
+              ) : (
+                <PlaceholderMonochrome label={logo.name} />
+              )}
             </a>
           ))}
         </div>
@@ -347,7 +355,7 @@ export default function Home() {
       <section className="bg-gray-50 py-16">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <h2 className="text-center text-3xl font-bold text-emerald-800">FAQs</h2>
-        <div className="mt-8 space-y-3">
+          <div className="mt-8 space-y-3">
             {[
               {
                 q: "Where do you work?",
