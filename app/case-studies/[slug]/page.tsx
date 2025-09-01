@@ -2,32 +2,35 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import { use } from "react";
 import { CASE_STUDIES, getCaseStudyBySlug } from "../../../lib/case-studies";
 
-// (Optional) makes Next only build known slugs
+// Only build the slugs we provide
 export const dynamicParams = false;
 
-// --- Pre-build all slugs (STATIC)
+// SSG: return a plain array of { slug }
 export function generateStaticParams(): { slug: string }[] {
   return CASE_STUDIES.map((c) => ({ slug: c.slug }));
 }
 
-// --- Per-page <head> metadata
-export function generateMetadata(
-  { params }: { params: { slug: string } }
-): Metadata {
-  const c = getCaseStudyBySlug(params.slug);
+// Next 15: params is a Promise — unwrap it with await
+export async function generateMetadata(
+  { params }: { params: Promise<{ slug: string }> }
+): Promise<Metadata> {
+  const { slug } = await params;
+  const c = getCaseStudyBySlug(slug);
   return {
     title: c ? `${c.title} — Case Study — DevChangeHub` : "Case Study — DevChangeHub",
     description: c?.summary ?? "Case study",
   };
 }
 
-// --- Page component
+// Page component: also receives params as a Promise — unwrap with React.use()
 export default function CaseStudyDetail(
-  { params }: { params: { slug: string } }
+  { params }: { params: Promise<{ slug: string }> }
 ) {
-  const c = getCaseStudyBySlug(params.slug);
+  const { slug } = use(params);
+  const c = getCaseStudyBySlug(slug);
   if (!c) return notFound();
 
   return (
