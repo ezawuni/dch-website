@@ -56,17 +56,18 @@ export const CASE_STUDIES: CaseStudy[] = [
     ],
   },
   {
-    slug: "afdb-project",
-    title: "Market Systems & Analytics — Scoping",
-    client: "AfDB (example)",
-    year: "2022",
-    sector: "Markets & Trade",
+    slug: "fairtrade-cocoa-climate",
+    title: "Ghana Cocoa and Climate Change Project — Baseline Study",
+    client: "Fairtrade Africa (Dignity for All Impact Programme)",
+    year: "2018–2021",
+    sector: "Climate & Agriculture",
     summary:
-      "Scoping analysis for market systems support with a focus on data flows, private investment pathways, and institutional readiness.",
+      "This baseline study was part of the Finnish-funded Fairtrade Africa 'Dignity for All' (D4A) Impact Programme (2018–2021), implemented across Ghana, Ethiopia, Malawi, and South Africa. In Ghana, the focus was on cocoa-producing households and their resilience to climate change impacts. The D4A Programme aimed to build resilient agro-based trade systems and ensure sustainable livelihoods through rights-based approaches and empowerment, while tracking change in producer organizations, supply chains, consumer behavior, and civil society action.",
     results: [
-      "Prioritized interventions by feasibility",
-      "Roadmap linking data → action",
-      "Partner coordination notes prepared",
+      "Assessed resilience of cocoa-producing households to climate change",
+      "Grounded in Fairtrade Theory of Change and rights-based approaches",
+      "Tracked change in producer organizations, supply chains, consumers, and civil society",
+      "Highlighted cross-cutting issues: gender equality, vulnerable groups, and environmental sustainability",
     ],
   },
 ];
