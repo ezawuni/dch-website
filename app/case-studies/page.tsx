@@ -1,6 +1,6 @@
 // app/case-studies/page.tsx
 import Link from "next/link";
-import { CASE_STUDIES } from "@/lib/case-studies";
+import { CASE_STUDIES } from "../../lib/case-studies";
 
 export const metadata = {
   title: "Case Studies — DevChangeHub",
