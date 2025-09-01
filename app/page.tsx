@@ -10,7 +10,7 @@ const TRUST_LOGOS: Logo[] = [
   { name: "World Bank", href: "/case-studies/world-bank-program" },
   { name: "European Union", href: "/case-studies/eu-program" },
   { name: "UNICEF", href: "/case-studies/unicef-initiative" },
-  { name: "AfDB", href: "/case-studies/afdb-project" },
+  { name: "Fairtrade Africa",  href: "/case-studies/fairtrade-cocoa-climate", file: "fairtrade.svg" },
 ];
 
 function PlaceholderMonochrome({ label }: { label: string }) {
