@@ -1,6 +1,12 @@
+// app/layout.tsx
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+
+// ⬇️ Add these imports (they point to files you created in /components)
+import SkipLink from "@/components/SkipLink";
+import Navbar from "@/components/Navbar";
+import ScrollProgress from "@/components/ScrollProgress";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,8 +19,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'DevChangeHub | Powering Development Through Evidence Across Africa',
-  description: 'DevChangeHub connects data, evidence, and action for impactful development in Africa.',
+  title: "DevChangeHub | Powering Development Through Evidence Across Africa",
+  description:
+    "DevChangeHub connects data, evidence, and action for impactful development in Africa.",
 };
 
 export default function RootLayout({
@@ -23,28 +30,24 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="scroll-smooth">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white text-neutral-900`}
       >
-        <nav className="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-8 bg-white shadow px-4 py-2 mb-8">
-  <a href="/" className="text-green-800 font-semibold">Home</a>
-  <a href="/blog" className="text-green-800 font-semibold">Blog</a>
-  <a href="/team" className="text-green-800 font-semibold">Team</a>
-  <a href="/careers" className="text-green-800 font-semibold">Careers</a>
-  <a href="/dashboards" className="text-green-800 font-semibold">Dashboards</a>
-  <a href="/contact" className="text-green-800 font-semibold">Contact</a>
-</nav>
-        {children}
+        {/* Accessibility: Tab once to reveal this, jumps to <main id="main"> */}
+        <SkipLink />
+
+        {/* Sticky glassy navbar with focus styles */}
+        <Navbar />
+
+        {/* Thin orange bar that shows scroll progress (sits under navbar) */}
+        <ScrollProgress />
+
+        {/* Main content target for the skip-link */}
+        <main id="main" className="min-h-screen">
+          {children}
+        </main>
       </body>
     </html>
   );
 }
-<nav className="...">
-  <a href="/">Home</a>
-  <a href="/blog">Blog</a>
-  <a href="/team">Team</a>
-  <a href="/careers">Careers</a>
-  <a href="/dashboards">Dashboards</a>
-  <a href="/contact">Contact</a>
-</nav>
