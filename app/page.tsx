@@ -216,9 +216,6 @@ export default function Home() {
             </a>
           ))}
         </div>
-        <p className="mt-3 text-center text-sm text-neutral-600">
-          Each logo links to a proof page (case note or case study).
-        </p>
       </section>
 
       {/* =============== VALUE PROPS =============== */}
@@ -341,9 +338,7 @@ export default function Home() {
                   key={i}
                   aria-label={`Go to testimonial ${i + 1}`}
                   onClick={() => setTIndex(i)}
-                  className={`h-2.5 w-2.5 rounded-full ${
-                    tIndex === i ? "bg-emerald-700" : "bg-emerald-200"
-                  }`}
+                  className={`h-2.5 w-2.5 rounded-full ${tIndex === i ? "bg-emerald-700" : "bg-emerald-200"}`}
                 />
               ))}
             </div>
