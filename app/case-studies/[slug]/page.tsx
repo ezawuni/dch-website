@@ -1,7 +1,7 @@
 // app/case-studies/[slug]/page.tsx
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { CASE_STUDIES, getCaseStudyBySlug } from "@/lib/case-studies";
+import { CASE_STUDIES, getCaseStudyBySlug } from "../../../lib/case-studies";
 
 type Props = { params: { slug: string } };
 
