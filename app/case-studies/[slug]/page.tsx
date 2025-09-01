@@ -1,15 +1,21 @@
 // app/case-studies/[slug]/page.tsx
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 import { CASE_STUDIES, getCaseStudyBySlug } from "../../../lib/case-studies";
 
-// Pre-build all the known slugs
-export async function generateStaticParams() {
+// (Optional) makes Next only build known slugs
+export const dynamicParams = false;
+
+// --- Pre-build all slugs (STATIC)
+export function generateStaticParams(): { slug: string }[] {
   return CASE_STUDIES.map((c) => ({ slug: c.slug }));
 }
 
-// Page <head> metadata per case
-export async function generateMetadata({ params }: { params: { slug: string } }) {
+// --- Per-page <head> metadata
+export function generateMetadata(
+  { params }: { params: { slug: string } }
+): Metadata {
   const c = getCaseStudyBySlug(params.slug);
   return {
     title: c ? `${c.title} — Case Study — DevChangeHub` : "Case Study — DevChangeHub",
@@ -17,7 +23,10 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   };
 }
 
-export default function CaseStudyDetail({ params }: { params: { slug: string } }) {
+// --- Page component
+export default function CaseStudyDetail(
+  { params }: { params: { slug: string } }
+) {
   const c = getCaseStudyBySlug(params.slug);
   if (!c) return notFound();
 
