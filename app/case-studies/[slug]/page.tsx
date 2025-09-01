@@ -3,13 +3,13 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CASE_STUDIES, getCaseStudyBySlug } from "../../../lib/case-studies";
 
-type Props = { params: { slug: string } };
-
-export function generateStaticParams() {
+// Pre-build all the known slugs
+export async function generateStaticParams() {
   return CASE_STUDIES.map((c) => ({ slug: c.slug }));
 }
 
-export function generateMetadata({ params }: Props) {
+// Page <head> metadata per case
+export async function generateMetadata({ params }: { params: { slug: string } }) {
   const c = getCaseStudyBySlug(params.slug);
   return {
     title: c ? `${c.title} — Case Study — DevChangeHub` : "Case Study — DevChangeHub",
@@ -17,7 +17,7 @@ export function generateMetadata({ params }: Props) {
   };
 }
 
-export default function CaseStudyDetail({ params }: Props) {
+export default function CaseStudyDetail({ params }: { params: { slug: string } }) {
   const c = getCaseStudyBySlug(params.slug);
   if (!c) return notFound();
 
