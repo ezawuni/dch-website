@@ -4,22 +4,39 @@ import { useEffect, useRef, useState } from "react";
 import type { RefObject } from "react";
 import { motion } from "framer-motion";
 
+/* -------------------- Trusted-by (placeholder logos + proof links) -------------------- */
+type Logo = { name: string; href: string; title?: string };
+const TRUST_LOGOS: Logo[] = [
+  { name: "World Bank", href: "/case-studies/world-bank-program" },
+  { name: "European Union", href: "/case-studies/eu-program" },
+  { name: "UNICEF", href: "/case-studies/unicef-initiative" },
+  { name: "AfDB", href: "/case-studies/afdb-project" },
+];
+
+function PlaceholderMonochrome({ label }: { label: string }) {
+  return (
+    <svg viewBox="0 0 200 60" role="img" aria-label={label} className="h-10 w-auto">
+      <rect width="200" height="60" rx="8" className="fill-neutral-400" />
+      <text x="100" y="36" textAnchor="middle" className="fill-white" style={{ font: "bold 20px system-ui" }}>
+        {label}
+      </text>
+    </svg>
+  );
+}
+
 /* -------------------- Editable content -------------------- */
 const VALUE_PROPS = [
   {
     title: "Evidence to Action",
-    body:
-      "We turn complex data into decisions—clear insights, short cycles, measurable results.",
+    body: "We turn complex data into decisions—clear insights, short cycles, measurable results.",
   },
   {
     title: "Africa-Focused",
-    body:
-      "Deep understanding of Ghana and West Africa institutions, markets, and delivery realities.",
+    body: "Deep understanding of Ghana and West Africa institutions, markets, and delivery realities.",
   },
   {
     title: "Secure & Transparent",
-    body:
-      "Privacy by design, least-privilege access, and stakeholder-friendly reporting.",
+    body: "Privacy by design, least-privilege access, and stakeholder-friendly reporting.",
   },
 ];
 
@@ -62,20 +79,6 @@ const PROJECTS = [
     description:
       "Multi-round household survey across nine high-risk districts; emergency readiness analytics (UNICEF Ghana).",
   },
-];
-
-const CLIENTS = [
-  "World Bank",
-  "UNICEF",
-  "USAID",
-  "GIZ",
-  "Mastercard Foundation",
-  "EU",
-  "Ministry of Finance",
-  "Ghana Enterprises Agency",
-  "Ministry of Tourism, Arts and Culture",
-  "Fairtrade Africa",
-  "British Council",
 ];
 
 const TESTIMONIALS = [
@@ -133,34 +136,6 @@ function useOnScreen(ref: RefObject<Element | null>, rootMargin = "0px") {
   return isIntersecting;
 }
 
-/* -------------------- Counter (no libs) -------------------- */
-function Counter({ to, label }: { to: number; label: string }) {
-  const ref = useRef<HTMLDivElement | null>(null);
-  const visible = useOnScreen(ref, "-20%");
-  const [val, setVal] = useState(0);
-
-  useEffect(() => {
-    if (!visible) return;
-    const duration = 900; // ms
-    const start = performance.now();
-    const tick = (t: number) => {
-      const p = Math.min(1, (t - start) / duration);
-      setVal(Math.round(to * (0.2 + 0.8 * p)));
-      if (p < 1) requestAnimationFrame(tick);
-    };
-    requestAnimationFrame(tick);
-  }, [visible, to]);
-
-  return (
-    <div ref={ref} className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-black/5">
-      <div className="text-3xl font-extrabold text-emerald-700">
-        {val.toLocaleString()}+
-      </div>
-      <div className="mt-1 text-gray-600">{label}</div>
-    </div>
-  );
-}
-
 /* ========================================================= */
 
 export default function Home() {
@@ -215,22 +190,27 @@ export default function Home() {
               Our services
             </a>
           </motion.div>
-
-          {/* clients strip */}
-          <motion.div className="mt-14" {...fadeUp(0.35)}>
-            <p className="text-sm text-emerald-50/80 mb-4">Trusted by</p>
-            <div className="flex flex-wrap items-center justify-center gap-3">
-              {CLIENTS.map((c) => (
-                <span
-                  key={c}
-                  className="rounded-full bg-white/10 px-4 py-1 text-sm font-medium text-white ring-1 ring-white/15"
-                >
-                  {c}
-                </span>
-              ))}
-            </div>
-          </motion.div>
         </div>
+      </section>
+
+      {/* =============== TRUSTED BY (logos → proof links) =============== */}
+      <section aria-labelledby="trusted-title" className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
+        <h2 id="trusted-title" className="sr-only">Trusted by</h2>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 items-center">
+          {TRUST_LOGOS.map((logo, i) => (
+            <a
+              key={logo.name}
+              href={logo.href}
+              className="group grayscale hover:grayscale-0 focus:grayscale-0 transition rounded outline-none focus-visible:ring p-3 flex items-center justify-center bg-white"
+              title={logo.title ?? `See proof: ${logo.name}`}
+            >
+              <PlaceholderMonochrome label={logo.name} />
+            </a>
+          ))}
+        </div>
+        <p className="mt-3 text-center text-sm text-neutral-600">
+          Each logo links to a proof page (case note or case study).
+        </p>
       </section>
 
       {/* =============== VALUE PROPS =============== */}
@@ -258,15 +238,28 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ================== IMPACT STATS ================== */}
+      {/* ================== IMPACT (SSR-safe numbers) ================== */}
       <section className="bg-gray-50 py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <h2 className="text-center text-3xl font-bold text-emerald-800">Our Impact</h2>
+          {/* Server-rendered numbers for SEO and non-JS users */}
           <div className="mt-10 grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-6">
-            <Counter to={10} label="Countries" />
-            <Counter to={25} label="Dashboards" />
-            <Counter to={35} label="Partners" />
-            <Counter to={100_000} label="People Reached" />
+            <div className="rounded-2xl bg-white p-6 text-center shadow-sm ring-1 ring-black/5">
+              <div className="text-3xl font-extrabold text-emerald-700">10+</div>
+              <div className="mt-1 text-gray-600">Countries</div>
+            </div>
+            <div className="rounded-2xl bg-white p-6 text-center shadow-sm ring-1 ring-black/5">
+              <div className="text-3xl font-extrabold text-emerald-700">20+</div>
+              <div className="mt-1 text-gray-600">Dashboards</div>
+            </div>
+            <div className="rounded-2xl bg-white p-6 text-center shadow-sm ring-1 ring-black/5">
+              <div className="text-3xl font-extrabold text-emerald-700">30+</div>
+              <div className="mt-1 text-gray-600">Partners</div>
+            </div>
+            <div className="rounded-2xl bg-white p-6 text-center shadow-sm ring-1 ring-black/5">
+              <div className="text-3xl font-extrabold text-emerald-700">100,000+</div>
+              <div className="mt-1 text-gray-600">People Reached</div>
+            </div>
           </div>
         </div>
       </section>
@@ -354,7 +347,7 @@ export default function Home() {
       <section className="bg-gray-50 py-16">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <h2 className="text-center text-3xl font-bold text-emerald-800">FAQs</h2>
-          <div className="mt-8 space-y-3">
+        <div className="mt-8 space-y-3">
             {[
               {
                 q: "Where do you work?",
