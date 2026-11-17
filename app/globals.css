@@ -9,7 +9,9 @@
   --color-brand-deep: #092f24;
   --color-brand-soft: #dcebe3;
   --color-accent: #e8742a;
-  --color-accent-ink: #b8530f;
+  --color-accent-ink: #a3470b;
+  --color-gold: #f2b84b;
+  --color-sage: #e9f0ea;
   --font-sans: var(--font-geist-sans);
   --font-serif: var(--font-serif);
 }
@@ -23,6 +25,17 @@ body {
   background: #fff;
   color: var(--color-ink);
   font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-size: 1.0625rem;
+  line-height: 1.65;
+}
+
+::selection {
+  background: var(--color-gold);
+  color: var(--color-ink);
+}
+
+p, li, blockquote {
+  text-wrap: pretty;
 }
 
 h1, h2, h3 {
@@ -57,3 +70,90 @@ details[open] .faq-icon { transform: rotate(45deg); }
   outline: 2px solid var(--color-accent);
   outline-offset: 3px;
 }
+
+/* ---------------- Motion ---------------- */
+
+/* scroll reveal (see components/Reveal.tsx) */
+[data-reveal="hidden"] {
+  opacity: 0;
+  transform: translateY(26px);
+}
+[data-reveal="shown"] {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.8s ease var(--reveal-delay, 0ms),
+    transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) var(--reveal-delay, 0ms);
+}
+
+/* route change fade */
+@keyframes page-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+.page-in { animation: page-in 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+
+/* hero: slow drifting glow + underline that draws itself */
+@keyframes drift-a {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(40px, 30px) scale(1.12); }
+}
+@keyframes drift-b {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-50px, -24px) scale(1.18); }
+}
+.orb-a { animation: drift-a 16s ease-in-out infinite; }
+.orb-b { animation: drift-b 20s ease-in-out infinite; }
+
+@keyframes draw {
+  to { background-size: 100% 0.14em; }
+}
+.draw-underline {
+  background-image: linear-gradient(var(--color-accent), var(--color-accent));
+  background-repeat: no-repeat;
+  background-position: 0 92%;
+  background-size: 0 0.14em;
+  animation: draw 0.9s cubic-bezier(0.6, 0, 0.2, 1) 0.9s forwards;
+}
+
+/* mobile menu */
+@keyframes menu-in {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: none; }
+}
+.menu-in { animation: menu-in 0.25s ease both; }
+
+/* smoother FAQ open/close where supported (progressive enhancement) */
+:root { interpolate-size: allow-keywords; }
+details::details-content {
+  block-size: 0;
+  overflow: clip;
+  transition: block-size 0.35s ease, content-visibility 0.35s allow-discrete;
+}
+details[open]::details-content { block-size: auto; }
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] { opacity: 1 !important; transform: none !important; transition: none !important; }
+  .page-in, .orb-a, .orb-b, .menu-in { animation: none; }
+  .draw-underline { animation: none; background-size: 100% 0.14em; }
+  details::details-content { transition: none; }
+  * { transition-duration: 0.01ms !important; }
+}
+
+/* map regions fade in one after another when the map scrolls into view */
+.region {
+  opacity: 1;
+  transition: opacity 0.6s ease calc(var(--i, 0) * 70ms), fill 0.2s ease 0s;
+}
+[data-reveal="hidden"] .region { opacity: 0; }
+@media (prefers-reduced-motion: reduce) {
+  .region { transition: fill 0.01ms; }
+}
+
+/* slow shimmer on the hero edge light */
+@keyframes sheen {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 0.9; }
+}
+.sheen { animation: sheen 9s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) { .sheen { animation: none; } }
