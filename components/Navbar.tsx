@@ -47,8 +47,8 @@ export default function Navbar() {
                 <Link
                   href={item.href}
                   aria-current={active ? "page" : undefined}
-                  className={`text-sm font-medium transition-colors hover:text-brand ${
-                    active ? "text-brand underline decoration-accent decoration-2 underline-offset-8" : "text-muted"
+                  className={`relative py-1 text-sm font-medium transition-colors hover:text-brand after:absolute after:-bottom-0.5 after:left-0 after:h-0.5 after:w-full after:origin-left after:bg-accent after:transition-transform after:duration-300 hover:after:scale-x-100 ${
+                    active ? "text-brand after:scale-x-100" : "text-muted after:scale-x-0"
                   }`}
                 >
                   {item.label}
@@ -59,7 +59,7 @@ export default function Navbar() {
           <li>
             <Link
               href="/contact"
-              className="rounded-full bg-brand px-5 py-2 text-sm font-semibold text-white transition hover:bg-brand-deep"
+              className="rounded-full bg-brand px-5 py-2 text-sm font-semibold text-white transition duration-300 hover:-translate-y-0.5 hover:bg-brand-deep hover:shadow-md"
             >
               Work with us
             </Link>
@@ -81,7 +81,7 @@ export default function Navbar() {
       </nav>
 
       {open && (
-        <div id="mobile-menu" className="border-t border-line bg-white px-5 pb-6 pt-2 md:hidden">
+        <div id="mobile-menu" className="menu-in border-t border-line bg-white px-5 pb-6 pt-2 md:hidden">
           <ul>
             {NAV.map((item) => (
               <li key={item.href} className="border-b border-line">
