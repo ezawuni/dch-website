@@ -73,7 +73,7 @@ const PROJECTS = [
 ];
 
 const STATS = [
-  { value: "10+", label: "Countries" },
+  { value: "16", label: "Regions of Ghana covered" },
   { value: "20+", label: "Dashboards built" },
   { value: "30+", label: "Partners" },
   { value: "100,000+", label: "People reached" },

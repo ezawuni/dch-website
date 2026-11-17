@@ -81,7 +81,7 @@ export default function Contact() {
             </div>
             <div>
               <dt className="text-xs font-semibold uppercase tracking-[0.14em] text-muted">Office</dt>
-              <dd className="mt-1">12 Kenniffe Close, Tema Community 22, Ghana</dd>
+              <dd className="mt-1">12 Kennife Close, Tema Community 22, Ghana</dd>
             </div>
           </dl>
         </aside>

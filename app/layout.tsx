@@ -55,7 +55,7 @@ const orgJsonLd = {
   telephone: "+233203817101",
   address: {
     "@type": "PostalAddress",
-    streetAddress: "12 Kenniffe Close, Tema Community 22",
+    streetAddress: "12 Kennife Close, Tema Community 22",
     addressCountry: "GH",
   },
 };

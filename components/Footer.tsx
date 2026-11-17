@@ -27,7 +27,7 @@ export default function Footer() {
         <div>
           <h2 className="text-xs font-semibold uppercase tracking-[0.14em] text-white/50">Contact</h2>
           <address className="mt-4 space-y-2 text-sm not-italic text-white/80">
-            <p>12 Kenniffe Close, Tema Community 22, Ghana</p>
+            <p>12 Kennife Close, Tema Community 22, Ghana</p>
             <p><a className="hover:underline" href="tel:+233203817101">+233 (0)203 817 101</a></p>
             <p><a className="hover:underline" href="mailto:devchangehub@gmail.com">devchangehub@gmail.com</a></p>
           </address>
