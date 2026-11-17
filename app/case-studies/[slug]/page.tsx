@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { CASE_STUDIES, getCaseStudyBySlug } from "@/lib/case-studies";
+import Pattern, { patternFor } from "@/components/Pattern";
 
 export const dynamicParams = false;
 
@@ -29,8 +30,9 @@ export default async function CaseStudyDetail(
 
   return (
     <>
-      <section className="bg-brand-deep text-white">
-        <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8 sm:py-20">
+      <section className="relative overflow-hidden bg-brand-deep text-white">
+        <Pattern variant={patternFor(c.slug)} className="pointer-events-none absolute inset-y-0 right-0 hidden h-full w-1/2 opacity-60 [mask-image:linear-gradient(to_right,transparent,#000_70%)] md:block" />
+        <div className="relative mx-auto max-w-6xl px-5 py-14 sm:px-8 sm:py-20">
           <Link href="/case-studies" className="text-sm text-white/70 hover:text-white">
             ← All case studies
           </Link>

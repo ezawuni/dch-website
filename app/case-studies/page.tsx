@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import PageHeader from "@/components/PageHeader";
+import Pattern, { patternFor } from "@/components/Pattern";
 import { CASE_STUDIES } from "@/lib/case-studies";
 
 export const metadata: Metadata = {
@@ -21,9 +22,12 @@ export default function CaseStudiesIndex() {
             <li key={c.slug}>
               <Link
                 href={`/case-studies/${c.slug}`}
-                className="group grid gap-3 py-8 md:grid-cols-[11rem_1fr_auto] md:items-start md:gap-10"
+                className="group grid gap-3 py-8 md:grid-cols-[13rem_1fr_auto] md:items-start md:gap-10"
               >
                 <div className="text-sm text-muted">
+                  <div className="mb-4 overflow-hidden rounded-xl ring-1 ring-line">
+                    <Pattern variant={patternFor(c.slug)} className="h-24 w-full transition-transform duration-700 group-hover:scale-110 md:h-28" />
+                  </div>
                   <p className="font-semibold text-accent-ink">{c.sector}</p>
                   <p className="mt-1">{c.year}</p>
                 </div>

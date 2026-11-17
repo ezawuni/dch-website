@@ -16,6 +16,7 @@ const serif = Fraunces({
   variable: "--font-serif",
   subsets: ["latin"],
   axes: ["opsz"],
+  style: ["normal", "italic"],
 });
 
 const SITE_URL = "https://www.devchangehub.com";

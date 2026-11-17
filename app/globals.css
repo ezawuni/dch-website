@@ -9,7 +9,9 @@
   --color-brand-deep: #092f24;
   --color-brand-soft: #dcebe3;
   --color-accent: #e8742a;
-  --color-accent-ink: #b8530f;
+  --color-accent-ink: #a3470b;
+  --color-gold: #f2b84b;
+  --color-sage: #e9f0ea;
   --font-sans: var(--font-geist-sans);
   --font-serif: var(--font-serif);
 }
@@ -23,6 +25,17 @@ body {
   background: #fff;
   color: var(--color-ink);
   font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-size: 1.0625rem;
+  line-height: 1.65;
+}
+
+::selection {
+  background: var(--color-gold);
+  color: var(--color-ink);
+}
+
+p, li, blockquote {
+  text-wrap: pretty;
 }
 
 h1, h2, h3 {
@@ -126,3 +139,21 @@ details[open]::details-content { block-size: auto; }
   details::details-content { transition: none; }
   * { transition-duration: 0.01ms !important; }
 }
+
+/* map regions fade in one after another when the map scrolls into view */
+.region {
+  opacity: 1;
+  transition: opacity 0.6s ease calc(var(--i, 0) * 70ms), fill 0.2s ease 0s;
+}
+[data-reveal="hidden"] .region { opacity: 0; }
+@media (prefers-reduced-motion: reduce) {
+  .region { transition: fill 0.01ms; }
+}
+
+/* slow shimmer on the hero edge light */
+@keyframes sheen {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 0.9; }
+}
+.sheen { animation: sheen 9s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) { .sheen { animation: none; } }

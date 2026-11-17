@@ -1,6 +1,8 @@
 import Link from "next/link";
 import Reveal from "@/components/Reveal";
 import CountUp from "@/components/CountUp";
+import Pattern, { patternFor } from "@/components/Pattern";
+import GhanaMap, { GhanaOutline } from "@/components/GhanaMap";
 
 /* -------------------- Editable content -------------------- */
 const CLIENTS = [
@@ -152,65 +154,79 @@ export default function Home() {
   return (
     <>
       {/* =================== HERO =================== */}
-      <section className="relative overflow-hidden bg-brand-deep text-white">
-        <div
-          aria-hidden
-          className="absolute inset-0 opacity-[0.07]"
-          style={{
-            backgroundImage:
-              "linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)",
-            backgroundSize: "56px 56px",
-          }}
-        />
-        <div aria-hidden className="orb-a pointer-events-none absolute -right-24 -top-24 h-96 w-96 rounded-full bg-accent/20 blur-3xl" />
-        <div aria-hidden className="orb-b pointer-events-none absolute -bottom-32 left-1/4 h-96 w-96 rounded-full bg-brand-soft/10 blur-3xl" />
-        <div className="relative mx-auto grid max-w-6xl gap-14 px-5 py-20 sm:px-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-center lg:py-28">
-          <div>
-            <div className="rise">
-              <Eyebrow light>Evidence and data consultancy · Ghana</Eyebrow>
-            </div>
-            <h1 className="font-display rise rise-2 mt-5 text-[2.6rem] font-semibold leading-[1.04] sm:text-6xl lg:text-[4.25rem]">
-              Powering development through <span className="draw-underline">evidence</span> across Africa.
-            </h1>
-            <p className="rise rise-3 mt-6 max-w-xl text-lg leading-relaxed text-white/75">
-              We help governments, donors, and businesses convert data into decisions.
-              Fast, practical, and secure.
-            </p>
-            <div className="rise rise-3 mt-9 flex flex-wrap gap-3">
-              <Link
-                href="/contact"
-                className="group/btn inline-flex items-center gap-2 rounded-full bg-accent px-7 py-3.5 font-semibold text-ink transition duration-300 hover:-translate-y-0.5 hover:bg-[#f08a45] hover:shadow-lg hover:shadow-black/20"
-              >
-                Start a conversation <Arrow />
-              </Link>
-              <Link
-                href="/case-studies"
-                className="inline-flex items-center rounded-full px-7 py-3.5 font-semibold text-white ring-1 ring-white/35 transition duration-300 hover:-translate-y-0.5 hover:bg-white/10 hover:ring-white/70"
-              >
-                See our work
-              </Link>
-            </div>
-          </div>
+      <section className="px-3 pt-3 sm:px-5 sm:pt-5">
+        <div className="relative overflow-hidden rounded-[1.75rem] bg-brand-deep text-white sm:rounded-[2.25rem]">
+          <div
+            aria-hidden
+            className="absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(60% 90% at 88% 0%, rgba(232,116,42,0.30), transparent 62%), radial-gradient(55% 80% at 0% 100%, rgba(242,184,75,0.14), transparent 60%), radial-gradient(40% 60% at 50% 50%, rgba(15,76,58,0.7), transparent 70%)",
+            }}
+          />
+          <div
+            aria-hidden
+            className="sheen absolute inset-0 opacity-[0.05]"
+            style={{
+              backgroundImage:
+                "linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)",
+              backgroundSize: "56px 56px",
+              maskImage: "radial-gradient(ellipse 80% 90% at 70% 40%, #000 20%, transparent 75%)",
+              WebkitMaskImage: "radial-gradient(ellipse 80% 90% at 70% 40%, #000 20%, transparent 75%)",
+            }}
+          />
+          <GhanaOutline className="pointer-events-none absolute -right-10 top-1/2 hidden h-[135%] -translate-y-1/2 text-white/[0.10] lg:block" />
+          <div aria-hidden className="orb-a pointer-events-none absolute -right-24 -top-24 h-96 w-96 rounded-full bg-accent/20 blur-3xl" />
+          <div aria-hidden className="orb-b pointer-events-none absolute -bottom-32 left-1/4 h-96 w-96 rounded-full bg-brand-soft/10 blur-3xl" />
 
-          <aside aria-label="Selected work" className="rise rise-3 rounded-2xl bg-white/[0.06] p-6 ring-1 ring-white/15 backdrop-blur sm:p-8">
-            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/55">Selected work</p>
-            <ul className="mt-2 divide-y divide-white/10">
-              {PROJECTS.map((p) => (
-                <li key={p.title}>
-                  <Link href={p.href} className="group group/btn flex items-start justify-between gap-4 py-5">
-                    <div>
-                      <p className="text-xs text-accent">{p.client}</p>
-                      <p className="font-display mt-1 text-xl font-medium transition-colors group-hover:text-accent">{p.title}</p>
-                      <p className="mt-1 text-sm text-white/60">{p.tag}</p>
-                    </div>
-                    <span className="mt-1 text-white/40 transition group-hover:text-accent">
-                      <Arrow />
-                    </span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </aside>
+          <div className="relative mx-auto grid max-w-6xl gap-14 px-6 py-20 sm:px-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-center lg:py-28">
+            <div>
+              <div className="rise">
+                <Eyebrow light>Evidence and data consultancy · Ghana</Eyebrow>
+              </div>
+              <h1 className="font-display rise rise-2 mt-5 text-[2.7rem] font-semibold leading-[1.03] sm:text-6xl lg:text-[4.6rem]">
+                Powering development through <span className="draw-underline italic text-gold">evidence</span> across Africa.
+              </h1>
+              <p className="rise rise-3 mt-6 max-w-xl text-lg leading-relaxed text-white/80">
+                We help governments, donors, and businesses convert data into decisions.
+                Fast, practical, and secure.
+              </p>
+              <div className="rise rise-3 mt-9 flex flex-wrap gap-3">
+                <Link
+                  href="/contact"
+                  className="group/btn inline-flex items-center gap-2 rounded-full bg-accent px-7 py-3.5 font-semibold text-ink transition duration-300 hover:-translate-y-0.5 hover:bg-[#f08a45] hover:shadow-lg hover:shadow-black/20"
+                >
+                  Start a conversation <Arrow />
+                </Link>
+                <Link
+                  href="/case-studies"
+                  className="inline-flex items-center rounded-full px-7 py-3.5 font-semibold text-white ring-1 ring-white/35 transition duration-300 hover:-translate-y-0.5 hover:bg-white/10 hover:ring-white/70"
+                >
+                  See our work
+                </Link>
+              </div>
+            </div>
+
+            <aside aria-label="Selected work" className="rise rise-3 rounded-2xl bg-white/[0.07] p-6 ring-1 ring-white/20 backdrop-blur-md sm:p-8">
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/70">Selected work</p>
+              <ul className="mt-2 divide-y divide-white/10">
+                {PROJECTS.map((p) => (
+                  <li key={p.title}>
+                    <Link href={p.href} className="group group/btn flex items-start justify-between gap-4 py-5">
+                      <div>
+                        <p className="text-xs font-medium text-gold">{p.client}</p>
+                        <p className="font-display mt-1 text-xl font-medium transition-colors group-hover:text-gold">{p.title}</p>
+                        <p className="mt-1 text-sm text-white/70">{p.tag}</p>
+                      </div>
+                      <span className="mt-1 text-white/50 transition group-hover:text-gold">
+                        <Arrow />
+                      </span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </aside>
+          </div>
         </div>
       </section>
 
@@ -265,11 +281,37 @@ export default function Home() {
           <dl className="grid grid-cols-2 gap-x-6 gap-y-10 lg:grid-cols-4">
             {STATS.map((s, i) => (
               <Reveal key={s.label} delay={i * 120} className="border-t border-white/25 pt-5">
-                <dd className="font-display text-[2rem] font-semibold leading-none sm:text-6xl"><CountUp value={s.value} /></dd>
-                <dt className="mt-2 text-sm text-white/70">{s.label}</dt>
+                <dd className="font-display text-[2rem] font-semibold leading-none text-gold sm:text-6xl"><CountUp value={s.value} /></dd>
+                <dt className="mt-2 text-sm text-white/80">{s.label}</dt>
               </Reveal>
             ))}
           </dl>
+        </div>
+      </section>
+
+      {/* =============== WHERE WE WORK =============== */}
+      <section id="coverage" className="bg-paper">
+        <div className="mx-auto grid max-w-6xl gap-14 px-5 py-20 sm:px-8 sm:py-28 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
+          <Reveal>
+            <Eyebrow>Where we work</Eyebrow>
+            <h2 className="font-display mt-4 text-4xl font-semibold leading-tight text-brand sm:text-5xl">
+              Field teams in all 16 regions of Ghana
+            </h2>
+            <p className="mt-5 max-w-lg leading-relaxed text-muted">
+              We have run studies, surveys, evaluations, and stakeholder consultations in every
+              region, backed by a trained, multilingual enumerator network we can mobilise
+              nationwide.
+            </p>
+            <p className="mt-4 max-w-lg leading-relaxed text-muted">
+              Beyond Ghana we work with partners in Nigeria (market systems and digital
+              diagnostics), Sierra Leone (youth employment and policy support), and Côte d’Ivoire
+              (MEL design).
+            </p>
+            <p className="mt-6 text-xs text-muted">
+              Region boundaries: geoBoundaries, CC BY 4.0.
+            </p>
+          </Reveal>
+          <GhanaMap />
         </div>
       </section>
 
@@ -296,7 +338,7 @@ export default function Home() {
       </section>
 
       {/* =============== PROJECTS =============== */}
-      <section id="projects" className="bg-paper">
+      <section id="projects" className="bg-sage">
         <div className="mx-auto max-w-6xl px-5 py-20 sm:px-8 sm:py-28">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <Reveal className="max-w-2xl">
@@ -315,8 +357,12 @@ export default function Home() {
               <Reveal as="li" delay={i * 120} key={p.title}>
                 <Link
                   href={p.href}
-                  className="group group/btn flex h-full flex-col rounded-2xl bg-white p-7 ring-1 ring-line transition duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:shadow-brand/10 hover:ring-brand/30"
+                  className="group group/btn flex h-full flex-col overflow-hidden rounded-2xl bg-white p-7 ring-1 ring-line transition duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:shadow-brand/10 hover:ring-brand/30"
                 >
+                  <Pattern
+                    variant={patternFor(p.href.split("/").pop() ?? "")}
+                    className="-mx-7 -mt-7 mb-6 h-36 w-[calc(100%+3.5rem)] max-w-none transition-transform duration-700 group-hover:scale-105"
+                  />
                   <p className="text-xs font-semibold uppercase tracking-[0.14em] text-accent-ink">{p.client}</p>
                   <h3 className="font-display mt-3 text-2xl font-semibold text-brand">{p.title}</h3>
                   <p className="mt-3 flex-1 leading-relaxed text-muted">{p.description}</p>
@@ -377,29 +423,40 @@ export default function Home() {
       </section>
 
       {/* =============== CTA =============== */}
-      <section id="contact" className="bg-brand-deep text-white">
-        <Reveal className="mx-auto max-w-6xl px-5 py-20 sm:px-8 sm:py-28">
-          <h2 className="font-display max-w-3xl text-4xl font-semibold leading-tight sm:text-6xl">
-            Tell us your goal. We’ll propose a phased plan.
-          </h2>
-          <p className="mt-6 max-w-xl text-lg text-white/75">
-            You get a fast win in weeks, not months.
-          </p>
-          <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4">
-            <Link
-              href="/contact"
-              className="group/btn inline-flex items-center gap-2 rounded-full bg-accent px-7 py-3.5 font-semibold text-ink transition duration-300 hover:-translate-y-0.5 hover:bg-[#f08a45] hover:shadow-lg hover:shadow-black/20"
-            >
-              Start a conversation <Arrow />
-            </Link>
-            <a className="text-white/80 underline-offset-4 hover:underline" href="mailto:devchangehub@gmail.com">
-              devchangehub@gmail.com
-            </a>
-            <a className="text-white/80 underline-offset-4 hover:underline" href="tel:+233203817101">
-              +233 (0)203 817 101
-            </a>
-          </div>
-        </Reveal>
+      <section id="contact" className="px-3 pb-3 sm:px-5 sm:pb-5">
+        <div className="relative overflow-hidden rounded-[1.75rem] bg-brand-deep text-white sm:rounded-[2.25rem]">
+          <div
+            aria-hidden
+            className="absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(55% 90% at 100% 100%, rgba(232,116,42,0.32), transparent 60%), radial-gradient(45% 70% at 0% 0%, rgba(242,184,75,0.14), transparent 60%)",
+            }}
+          />
+          <Pattern variant="dots" className="pointer-events-none absolute inset-y-0 right-0 hidden h-full w-1/2 opacity-30 [mask-image:linear-gradient(to_right,transparent,#000)] lg:block" />
+          <Reveal className="relative mx-auto max-w-6xl px-6 py-20 sm:px-10 sm:py-28">
+            <h2 className="font-display max-w-3xl text-4xl font-semibold leading-tight sm:text-6xl">
+              Tell us your goal. We’ll propose a <span className="italic text-gold">phased plan.</span>
+            </h2>
+            <p className="mt-6 max-w-xl text-lg text-white/80">
+              You get a fast win in weeks, not months.
+            </p>
+            <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4">
+              <Link
+                href="/contact"
+                className="group/btn inline-flex items-center gap-2 rounded-full bg-accent px-7 py-3.5 font-semibold text-ink transition duration-300 hover:-translate-y-0.5 hover:bg-[#f08a45] hover:shadow-lg hover:shadow-black/20"
+              >
+                Start a conversation <Arrow />
+              </Link>
+              <a className="text-white/85 underline-offset-4 hover:underline" href="mailto:devchangehub@gmail.com">
+                devchangehub@gmail.com
+              </a>
+              <a className="text-white/85 underline-offset-4 hover:underline" href="tel:+233203817101">
+                +233 (0)203 817 101
+              </a>
+            </div>
+          </Reveal>
+        </div>
       </section>
     </>
   );
