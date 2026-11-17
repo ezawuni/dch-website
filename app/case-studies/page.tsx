@@ -3,13 +3,13 @@ import Link from "next/link";
 import { CASE_STUDIES } from "../../lib/case-studies";
 
 export const metadata = {
-  title: "Case Studies — DevChangeHub",
+  title: "Case Studies",
   description: "Evidence to action: selected projects and results.",
 };
 
 export default function CaseStudiesIndex() {
   return (
-    <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
       <h1 className="text-3xl font-bold text-emerald-800">Case Studies</h1>
       <p className="mt-2 text-neutral-700">
         A few examples of how we turn complex evidence into clear, practical actions.
@@ -30,6 +30,6 @@ export default function CaseStudiesIndex() {
           </Link>
         ))}
       </div>
-    </main>
+    </div>
   );
 }

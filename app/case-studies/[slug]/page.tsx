@@ -34,7 +34,7 @@ export default function CaseStudyDetail(
   if (!c) return notFound();
 
   return (
-    <main className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-16">
+    <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-16">
       <Link href="/case-studies" className="text-sm text-emerald-700 hover:underline">
         ← All case studies
       </Link>
@@ -65,6 +65,6 @@ export default function CaseStudyDetail(
           </a>
         </p>
       )}
-    </main>
+    </div>
   );
 }

@@ -94,7 +94,7 @@ const TESTIMONIALS = [
   },
   {
     quote:
-      "We trusted DCH with an assignment that required both discretion and deep expertise. They handled sensitive issues with professionalism and still delivered a thorough, actionable report.” — Director, public agency.",
+      "We trusted DCH with an assignment that required both discretion and deep expertise. They handled sensitive issues with professionalism and still delivered a thorough, actionable report.",
     author: "Chief Director, Government Agency",
   },
   {
@@ -105,7 +105,7 @@ const TESTIMONIALS = [
   {
     quote:
       "The health and safety and gender mainstreaming guidance wasn’t just box-ticking. It was practical, context-sensitive, and helped us change how we approach program design.",
-    author: "COperations Lead, agribusiness program (West Africa)",
+    author: "Operations Lead, agribusiness program (West Africa)",
   },
 ];
 
@@ -143,7 +143,7 @@ export default function Home() {
   const [tIndex, setTIndex] = useState(0);
 
   return (
-    <main className="font-sans bg-white text-gray-900">
+    <div className="font-sans bg-white text-gray-900">
       {/* =================== HERO =================== */}
       <section className="relative overflow-hidden bg-gradient-to-b from-emerald-900 to-emerald-800">
         {/* soft orbs (safe classes only) */}
@@ -404,11 +404,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      {/* ================== FOOTER ================== */}
-      <footer className="bg-emerald-800 py-6 text-center text-white">
-        © {new Date().getFullYear()} Development Change Hub (DCH). All rights reserved.
-      </footer>
-    </main>
+    </div>
   );
 }

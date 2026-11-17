@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 const NAV = [
   { href: "/", label: "Home" },
   { href: "/case-studies", label: "Case Studies" },
-  { href: "/dashboards", label: "Dashboards" },
+  // Dashboards hidden until real dashboard links exist (route is app/app/dashboards, see review notes)
   { href: "/team", label: "Team" },
   { href: "/contact", label: "Contact" },
   // Careers hidden for now per PRD
@@ -21,10 +21,10 @@ export default function Navbar() {
       style={{ height: "64px" }}
     >
       <nav className="mx-auto max-w-screen-xl px-4 h-16 flex items-center justify-between">
-        <Link href="/" className="font-semibold tracking-tight focus:outline-none focus-visible:ring rounded">
+        <Link href="/" className="shrink-0 font-semibold tracking-tight focus:outline-none focus-visible:ring rounded">
           DevChangeHub
         </Link>
-        <ul className="flex items-center gap-5">
+        <ul className="flex items-center gap-1 text-sm sm:gap-5 sm:text-base">
           {NAV.map((item) => {
             const active = pathname === item.href;
             return (

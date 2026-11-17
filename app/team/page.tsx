@@ -1,3 +1,10 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Our Team",
+  description: "Meet the evaluation, gender and inclusion, and development planning experts behind DevChangeHub.",
+};
+
 export default function Team() {
   const members = [
     {
@@ -17,7 +24,7 @@ export default function Team() {
     },
   ];
   return (
-    <main className="max-w-5xl mx-auto py-16 px-4">
+    <div className="max-w-5xl mx-auto py-16 px-4">
       <h1 className="text-4xl font-bold text-green-800 mb-8">Meet Our Team</h1>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {members.map((m) => (
@@ -28,6 +35,6 @@ export default function Team() {
           </div>
         ))}
       </div>
-    </main>
+    </div>
   );
 }
