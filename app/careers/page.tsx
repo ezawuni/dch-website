@@ -1,8 +1,9 @@
+import PageHeader from "@/components/PageHeader";
+
 export default function Careers() {
   return (
-    <div style={{ padding: "2rem" }}>
-      <h1>Careers</h1>
-      <p>We’re always looking for talented people. Check back soon for openings!</p>
-    </div>
+    <PageHeader eyebrow="Careers" title="Join DCH">
+      We’re always looking for talented people. Check back soon for openings.
+    </PageHeader>
   );
 }

@@ -1,20 +1,21 @@
 // app/layout.tsx
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Fraunces } from "next/font/google";
 import "./globals.css";
 
 import SkipLink from "@/components/SkipLink";
 import Navbar from "@/components/Navbar";
-import ScrollProgress from "@/components/ScrollProgress";
+import Footer from "@/components/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const serif = Fraunces({
+  variable: "--font-serif",
   subsets: ["latin"],
+  axes: ["opsz"],
 });
 
 const SITE_URL = "https://www.devchangehub.com";
@@ -67,7 +68,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white text-neutral-900`}
+        className={`${geistSans.variable} ${serif.variable} antialiased`}
       >
         <script
           type="application/ld+json"
@@ -77,15 +78,12 @@ export default function RootLayout({
         {/* Accessibility: Tab once to reveal this, jumps to <main id="main"> */}
         <SkipLink />
         <Navbar />
-        <ScrollProgress />
 
-        <main id="main" className="min-h-screen">
+        <main id="main">
           {children}
         </main>
 
-        <footer className="bg-emerald-800 py-6 text-center text-white">
-          © {new Date().getFullYear()} Development Change Hub (DCH). All rights reserved.
-        </footer>
+        <Footer />
       </body>
     </html>
   );

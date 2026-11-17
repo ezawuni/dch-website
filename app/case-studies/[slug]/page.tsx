@@ -1,70 +1,97 @@
-// app/case-studies/[slug]/page.tsx
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { use } from "react";
-import { CASE_STUDIES, getCaseStudyBySlug } from "../../../lib/case-studies";
+import { CASE_STUDIES, getCaseStudyBySlug } from "@/lib/case-studies";
 
-// Only build the slugs we provide
 export const dynamicParams = false;
 
-// SSG: return a plain array of { slug }
 export function generateStaticParams(): { slug: string }[] {
   return CASE_STUDIES.map((c) => ({ slug: c.slug }));
 }
 
-// Next 15: params is a Promise — unwrap it with await
 export async function generateMetadata(
   { params }: { params: Promise<{ slug: string }> }
 ): Promise<Metadata> {
   const { slug } = await params;
   const c = getCaseStudyBySlug(slug);
   return {
-    title: c ? `${c.title} — Case Study — DevChangeHub` : "Case Study — DevChangeHub",
+    title: c ? c.title : "Case Study",
     description: c?.summary ?? "Case study",
   };
 }
 
-// Page component: also receives params as a Promise — unwrap with React.use()
-export default function CaseStudyDetail(
+export default async function CaseStudyDetail(
   { params }: { params: Promise<{ slug: string }> }
 ) {
-  const { slug } = use(params);
+  const { slug } = await params;
   const c = getCaseStudyBySlug(slug);
   if (!c) return notFound();
 
   return (
-    <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-16">
-      <Link href="/case-studies" className="text-sm text-emerald-700 hover:underline">
-        ← All case studies
-      </Link>
+    <>
+      <section className="bg-brand-deep text-white">
+        <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8 sm:py-20">
+          <Link href="/case-studies" className="text-sm text-white/70 hover:text-white">
+            ← All case studies
+          </Link>
+          <p className="mt-8 text-xs font-semibold uppercase tracking-[0.16em] text-accent">{c.sector}</p>
+          <h1 className="font-display mt-4 max-w-4xl text-4xl font-semibold leading-tight sm:text-5xl">
+            {c.title}
+          </h1>
+        </div>
+      </section>
 
-      <h1 className="mt-3 text-3xl font-bold text-emerald-900">{c.title}</h1>
-      <div className="mt-1 text-sm text-neutral-600">
-        {c.client} • {c.sector} • {c.year}
-      </div>
+      <div className="mx-auto grid max-w-6xl gap-12 px-5 py-14 sm:px-8 sm:py-20 lg:grid-cols-[1fr_16rem]">
+        <article>
+          <p className="text-xl leading-relaxed text-ink/90">{c.summary}</p>
 
-      <p className="mt-6 text-neutral-800">{c.summary}</p>
+          <h2 className="font-display mt-12 text-2xl font-semibold text-brand">Results</h2>
+          <ul className="mt-4 divide-y divide-line border-y border-line">
+            {c.results.map((r) => (
+              <li key={r} className="flex gap-4 py-4 leading-relaxed">
+                <span aria-hidden className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
+                {r}
+              </li>
+            ))}
+          </ul>
 
-      <h2 className="mt-8 text-xl font-semibold text-emerald-800">Results</h2>
-      <ul className="mt-3 list-disc pl-5 space-y-2 text-neutral-800">
-        {c.results.map((r, i) => (
-          <li key={i}>{r}</li>
-        ))}
-      </ul>
+          {c.linkHref && (
+            <p className="mt-8">
+              <a
+                href={c.linkHref}
+                className="inline-flex items-center rounded-full bg-brand px-6 py-3 font-semibold text-white hover:bg-brand-deep"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {c.linkLabel ?? "Open related resource"}
+              </a>
+            </p>
+          )}
+        </article>
 
-      {c.linkHref && (
-        <p className="mt-6">
-          <a
-            href={c.linkHref}
-            className="inline-flex items-center rounded-xl bg-emerald-700 px-4 py-2 text-white hover:bg-emerald-800 focus-visible:ring"
-            target="_blank"
-            rel="noopener noreferrer"
+        <aside className="h-fit rounded-2xl bg-paper p-6 ring-1 ring-line">
+          <dl className="space-y-5 text-sm">
+            <div>
+              <dt className="text-xs font-semibold uppercase tracking-[0.14em] text-muted">Client</dt>
+              <dd className="mt-1 font-medium">{c.client}</dd>
+            </div>
+            <div>
+              <dt className="text-xs font-semibold uppercase tracking-[0.14em] text-muted">Year</dt>
+              <dd className="mt-1 font-medium">{c.year}</dd>
+            </div>
+            <div>
+              <dt className="text-xs font-semibold uppercase tracking-[0.14em] text-muted">Sector</dt>
+              <dd className="mt-1 font-medium">{c.sector}</dd>
+            </div>
+          </dl>
+          <Link
+            href="/contact"
+            className="mt-6 block rounded-full bg-accent py-3 text-center text-sm font-semibold text-ink hover:bg-[#f08a45]"
           >
-            {c.linkLabel ?? "Open related resource"}
-          </a>
-        </p>
-      )}
-    </div>
+            Discuss a similar project
+          </Link>
+        </aside>
+      </div>
+    </>
   );
 }

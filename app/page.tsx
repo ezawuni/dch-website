@@ -1,42 +1,25 @@
-"use client";
+import Link from "next/link";
 
-import { useEffect, useRef, useState } from "react";
-import type { RefObject } from "react";
-import { motion } from "framer-motion";
-
-/* -------------------- Trusted-by (placeholder logos + proof links) -------------------- */
-type Logo = { name: string; href: string; title?: string; file?: string };
-const TRUST_LOGOS: Logo[] = [
+/* -------------------- Editable content -------------------- */
+const CLIENTS = [
   { name: "World Bank", href: "/case-studies/world-bank-program" },
   { name: "European Union", href: "/case-studies/eu-program" },
   { name: "UNICEF", href: "/case-studies/unicef-initiative" },
-  { name: "Fairtrade Africa", href: "/case-studies/fairtrade-cocoa-climate", file: "fairtrade.svg" },
+  { name: "Fairtrade Africa", href: "/case-studies/fairtrade-cocoa-climate" },
 ];
 
-function PlaceholderMonochrome({ label }: { label: string }) {
-  return (
-    <svg viewBox="0 0 200 60" role="img" aria-label={label} className="h-10 w-auto">
-      <rect width="200" height="60" rx="8" className="fill-neutral-400" />
-      <text x="100" y="36" textAnchor="middle" className="fill-white" style={{ font: "bold 20px system-ui" }}>
-        {label}
-      </text>
-    </svg>
-  );
-}
-
-/* -------------------- Editable content -------------------- */
 const VALUE_PROPS = [
   {
-    title: "Evidence to Action",
-    body: "We turn complex data into decisions—clear insights, short cycles, measurable results.",
+    title: "Evidence to action",
+    body: "We turn complex data into decisions: clear insights, short cycles, measurable results.",
   },
   {
-    title: "Africa-Focused",
+    title: "Rooted in West Africa",
     body: "Deep understanding of Ghana and West Africa institutions, markets, and delivery realities.",
   },
   {
-    title: "Secure & Transparent",
-    body: "Privacy by design, least-privilege access, and stakeholder-friendly reporting.",
+    title: "Secure and transparent",
+    body: "Privacy by design, least-privilege access, and reporting your stakeholders can follow.",
   },
 ];
 
@@ -44,49 +27,65 @@ const SERVICES = [
   {
     label: "Advisory",
     blurb:
-      "Consulting for startups, scaleups, and established organizations—clarifying strategy and installing controls for performance and growth.",
+      "Consulting for startups, scaleups, and established organizations. We clarify strategy and install the controls that drive performance and growth.",
   },
   {
-    label: "Technical Assistance",
+    label: "Technical assistance",
     blurb:
       "Capacity building and systems support for agencies, private actors, and development partners across Ghana and West Africa.",
   },
   {
-    label: "Evaluation & MEL",
+    label: "Evaluation and MEL",
     blurb:
       "Independent evaluations with rigorous methods and practical recommendations for course-correction and impact.",
   },
   {
-    label: "Tech & Innovation",
+    label: "Tech and innovation",
     blurb:
-      "Dashboards, secure databases, digital payments, and AI-assisted reporting—so leaders act with real-time evidence.",
+      "Dashboards, secure databases, digital payments, and AI-assisted reporting, so leaders can act on real-time evidence.",
   },
 ];
 
 const PROJECTS = [
   {
     title: "Ghana Jobs & Skills Project",
+    client: "World Bank",
+    tag: "US $200m programme",
     description:
-      "Nationwide tracer surveys and mixed-methods evaluation of a US $200m skills and jobs programme (World Bank).",
+      "Nationwide tracer surveys and mixed-methods evaluation of a skills and jobs programme.",
+    href: "/case-studies/world-bank-program",
   },
   {
     title: "SME Grants Evaluation",
-    description:
-      "End-of-grants evaluation (COVID-19 & SME windows) and ICR drafting for the Ministry of Tourism.",
+    client: "Ministry of Tourism",
+    tag: "COVID-19 and SME windows",
+    description: "End-of-grants evaluation and ICR drafting.",
+    href: "/case-studies/eu-program",
   },
   {
     title: "UNICEF Sahel Survey",
+    client: "UNICEF Ghana",
+    tag: "Nine high-risk districts",
     description:
-      "Multi-round household survey across nine high-risk districts; emergency readiness analytics (UNICEF Ghana).",
+      "Multi-round household survey with emergency readiness analytics.",
+    href: "/case-studies/unicef-initiative",
   },
 ];
 
+const STATS = [
+  { value: "10+", label: "Countries" },
+  { value: "20+", label: "Dashboards built" },
+  { value: "30+", label: "Partners" },
+  { value: "100,000+", label: "People reached" },
+];
+
+const FEATURED_QUOTE = {
+  quote:
+    "DCH delivered a decision-ready evaluation under tight timelines. Clear, rigorous, and practical.",
+  author: "Program Lead, Multilateral Partner",
+};
+
 const TESTIMONIALS = [
-  {
-    quote:
-      "DCH delivered a decision-ready evaluation under tight timelines. Clear, rigorous, and practical.",
-    author: "Program Lead, Multilateral Partner",
-  },
   {
     quote:
       "Working with DCH gave us more than just data. They helped us make sense of complex survey results, connected the dots for policy, and gave us a clear roadmap we could present to decision-makers with confidence.",
@@ -109,301 +108,292 @@ const TESTIMONIALS = [
   },
 ];
 
-/* -------------------- Motion helpers -------------------- */
-const fadeUp = (delay = 0) => ({
-  initial: { opacity: 0, y: 18 },
-  whileInView: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.55, delay },
+const FAQS = [
+  {
+    q: "Where do you work?",
+    a: "We are Ghana-incorporated and work across West Africa with public and private clients.",
   },
-  viewport: { once: true, margin: "-80px" },
-});
+  {
+    q: "What makes DCH different?",
+    a: "We translate evidence into concrete next steps. Short cycles, clear outputs, and shared ownership with client teams.",
+  },
+  {
+    q: "How do you handle data security?",
+    a: "Least-privilege access, secure storage, and clear data retention aligned to client requirements.",
+  },
+];
 
-/* -------------------- useOnScreen (type-safe) -------------------- */
-function useOnScreen(ref: RefObject<Element | null>, rootMargin = "0px") {
-  const [isIntersecting, setIntersecting] = useState(false);
-  useEffect(() => {
-    const node = ref.current;
-    if (!node) return;
-    const obs = new IntersectionObserver(
-      ([entry]) => setIntersecting(entry.isIntersecting),
-      { rootMargin }
-    );
-    obs.observe(node);
-    return () => obs.disconnect();
-  }, [ref, rootMargin]);
-  return isIntersecting;
+/* -------------------- Small pieces -------------------- */
+function Eyebrow({ children, light = false }: { children: React.ReactNode; light?: boolean }) {
+  return (
+    <p
+      className={`text-xs font-semibold uppercase tracking-[0.16em] ${
+        light ? "text-accent" : "text-accent-ink"
+      }`}
+    >
+      {children}
+    </p>
+  );
+}
+
+function Arrow() {
+  return (
+    <svg aria-hidden width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M3 8h10M9 4l4 4-4 4" />
+    </svg>
+  );
 }
 
 /* ========================================================= */
 
 export default function Home() {
-  const [activeTab, setActiveTab] = useState(0);
-  const [tIndex, setTIndex] = useState(0);
-
   return (
-    <div className="font-sans bg-white text-gray-900">
+    <>
       {/* =================== HERO =================== */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-emerald-900 to-emerald-800">
-        {/* soft orbs (safe classes only) */}
-        <div className="pointer-events-none absolute -top-28 -right-24 h-96 w-96 rounded-full bg-white/10 blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-28 -left-24 h-96 w-96 rounded-full bg-orange-400/20 blur-3xl" />
+      <section className="relative overflow-hidden bg-brand-deep text-white">
+        <div
+          aria-hidden
+          className="absolute inset-0 opacity-[0.07]"
+          style={{
+            backgroundImage:
+              "linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)",
+            backgroundSize: "56px 56px",
+          }}
+        />
+        <div className="relative mx-auto grid max-w-6xl gap-14 px-5 py-20 sm:px-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-center lg:py-28">
+          <div>
+            <div className="rise">
+              <Eyebrow light>Evidence and data consultancy · Ghana</Eyebrow>
+            </div>
+            <h1 className="font-display rise rise-2 mt-5 text-[2.6rem] font-semibold leading-[1.04] sm:text-6xl lg:text-[4.25rem]">
+              Powering development through evidence across Africa.
+            </h1>
+            <p className="rise rise-3 mt-6 max-w-xl text-lg leading-relaxed text-white/75">
+              We help governments, donors, and businesses convert data into decisions.
+              Fast, practical, and secure.
+            </p>
+            <div className="rise rise-3 mt-9 flex flex-wrap gap-3">
+              <Link
+                href="/contact"
+                className="inline-flex items-center gap-2 rounded-full bg-accent px-7 py-3.5 font-semibold text-ink transition hover:bg-[#f08a45]"
+              >
+                Start a conversation <Arrow />
+              </Link>
+              <Link
+                href="/case-studies"
+                className="inline-flex items-center rounded-full px-7 py-3.5 font-semibold text-white ring-1 ring-white/35 transition hover:bg-white/10"
+              >
+                See our work
+              </Link>
+            </div>
+          </div>
 
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24 sm:py-32 text-center">
-          <motion.img
-            src="/logo.png"
-            alt="DevChangeHub logo"
-            className="mx-auto mb-6 h-16 w-16"
-            {...fadeUp(0)}
-          />
-          <motion.h1
-            className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-white"
-            {...fadeUp(0.1)}
-          >
-            Powering Development
-            <br />
-            <span className="text-orange-300">Through Evidence Across Africa</span>
-          </motion.h1>
-          <motion.p
-            className="mx-auto mt-6 max-w-2xl text-lg text-emerald-50/90"
-            {...fadeUp(0.2)}
-          >
-            We help governments, donors, and businesses convert data into
-            decisions—fast, practical, and secure.
-          </motion.p>
-
-          <motion.div
-            className="mt-10 flex flex-wrap items-center justify-center gap-4"
-            {...fadeUp(0.3)}
-          >
-            <a
-              href="#contact"
-              className="inline-flex items-center rounded-xl bg-orange-500 px-6 py-3 font-semibold text-white hover:bg-orange-600 transition"
-            >
-              Get in touch
-            </a>
-            <a
-              href="#services"
-              className="inline-flex items-center rounded-xl bg-white/10 px-6 py-3 font-semibold text-white ring-1 ring-white/30 hover:bg-white/20 transition"
-            >
-              Our services
-            </a>
-          </motion.div>
+          <aside aria-label="Selected work" className="rise rise-3 rounded-2xl bg-white/[0.06] p-6 ring-1 ring-white/15 backdrop-blur sm:p-8">
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/55">Selected work</p>
+            <ul className="mt-2 divide-y divide-white/10">
+              {PROJECTS.map((p) => (
+                <li key={p.title}>
+                  <Link href={p.href} className="group flex items-start justify-between gap-4 py-5">
+                    <div>
+                      <p className="text-xs text-accent">{p.client}</p>
+                      <p className="font-display mt-1 text-xl font-medium">{p.title}</p>
+                      <p className="mt-1 text-sm text-white/60">{p.tag}</p>
+                    </div>
+                    <span className="mt-1 text-white/40 transition group-hover:translate-x-1 group-hover:text-accent">
+                      <Arrow />
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </aside>
         </div>
       </section>
 
-      {/* =============== TRUSTED BY (logos → proof links) =============== */}
-      <section aria-labelledby="trusted-title" className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
-        <h2 id="trusted-title" className="sr-only">Trusted by</h2>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 items-center">
-          {TRUST_LOGOS.map((logo) => (
-            <a
-              key={logo.name}
-              href={logo.href}
-              className="group grayscale hover:grayscale-0 focus:grayscale-0 transition rounded outline-none focus-visible:ring p-3 flex items-center justify-center bg-white"
-              title={logo.title ?? `See proof: ${logo.name}`}
-            >
-              {logo.file ? (
-                <img
-                  src={`/logos/${logo.file}`}
-                  alt={`${logo.name} logo`}
-                  className="h-10 w-auto"
-                />
-              ) : (
-                <PlaceholderMonochrome label={logo.name} />
-              )}
-            </a>
+      {/* =============== CLIENTS =============== */}
+      <section aria-labelledby="clients-title" className="border-b border-line bg-paper">
+        <div className="mx-auto flex max-w-6xl flex-col gap-5 px-5 py-8 sm:px-8 md:flex-row md:items-center md:justify-between">
+          <h2 id="clients-title" className="text-xs font-semibold uppercase tracking-[0.16em] text-muted">
+            Trusted by
+          </h2>
+          <ul className="flex flex-wrap gap-x-10 gap-y-3">
+            {CLIENTS.map((c) => (
+              <li key={c.name}>
+                <Link
+                  href={c.href}
+                  className="font-display text-xl font-medium text-brand transition hover:text-accent-ink"
+                >
+                  {c.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      {/* =============== WHY DCH =============== */}
+      <section className="mx-auto max-w-6xl px-5 py-20 sm:px-8 sm:py-28">
+        <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
+          <div>
+            <Eyebrow>Why partners choose DCH</Eyebrow>
+            <h2 className="font-display mt-4 text-4xl font-semibold leading-tight text-brand sm:text-5xl">
+              Simple outputs. Clear next steps. Measurable progress.
+            </h2>
+          </div>
+          <ol className="divide-y divide-line border-y border-line">
+            {VALUE_PROPS.map((vp, i) => (
+              <li key={vp.title} className="grid gap-2 py-7 sm:grid-cols-[4rem_1fr]">
+                <span className="font-display text-3xl text-accent-ink">0{i + 1}</span>
+                <div>
+                  <h3 className="text-xl font-semibold">{vp.title}</h3>
+                  <p className="mt-2 leading-relaxed text-muted">{vp.body}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      {/* =============== IMPACT =============== */}
+      <section aria-labelledby="impact-title" className="bg-brand text-white">
+        <div className="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-20">
+          <h2 id="impact-title" className="sr-only">Our impact</h2>
+          <dl className="grid grid-cols-2 gap-x-6 gap-y-10 lg:grid-cols-4">
+            {STATS.map((s) => (
+              <div key={s.label} className="border-t border-white/25 pt-5">
+                <dd className="font-display text-[2rem] font-semibold leading-none sm:text-6xl">{s.value}</dd>
+                <dt className="mt-2 text-sm text-white/70">{s.label}</dt>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </section>
+
+      {/* =============== SERVICES =============== */}
+      <section id="services" className="mx-auto max-w-6xl px-5 py-20 sm:px-8 sm:py-28">
+        <div className="max-w-2xl">
+          <Eyebrow>What we do</Eyebrow>
+          <h2 className="font-display mt-4 text-4xl font-semibold leading-tight text-brand sm:text-5xl">
+            Four ways we work with you
+          </h2>
+        </div>
+        <div className="mt-14 grid gap-px overflow-hidden rounded-2xl bg-line ring-1 ring-line sm:grid-cols-2">
+          {SERVICES.map((s, i) => (
+            <article key={s.label} className="bg-white p-8 sm:p-10">
+              <p className="font-display text-sm text-accent-ink">0{i + 1}</p>
+              <h3 className="font-display mt-3 text-2xl font-semibold text-brand">{s.label}</h3>
+              <p className="mt-3 leading-relaxed text-muted">{s.blurb}</p>
+            </article>
           ))}
         </div>
       </section>
 
-      {/* =============== VALUE PROPS =============== */}
-      <section className="bg-white py-16">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <motion.div className="text-center" {...fadeUp(0)}>
-            <h2 className="text-3xl font-bold text-emerald-800">Why partners choose DCH</h2>
-            <p className="mt-3 text-gray-700">Simple outputs. Clear next steps. Measurable progress.</p>
-          </motion.div>
-
-          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {VALUE_PROPS.map((vp, i) => (
-              <motion.div
-                key={vp.title}
-                {...fadeUp(0.05 * i)}
-                whileHover={{ y: -4 }}
-                className="group rounded-2xl bg-gray-50 p-6 text-left shadow-sm ring-1 ring-black/5"
-              >
-                <div className="text-lg font-semibold text-emerald-700">{vp.title}</div>
-                <p className="mt-2 text-gray-700">{vp.body}</p>
-                <div className="mt-4 h-1 w-0 bg-orange-500 transition-all duration-300 group-hover:w-16" />
-              </motion.div>
-            ))}
+      {/* =============== PROJECTS =============== */}
+      <section id="projects" className="bg-paper">
+        <div className="mx-auto max-w-6xl px-5 py-20 sm:px-8 sm:py-28">
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <div className="max-w-2xl">
+              <Eyebrow>Flagship projects</Eyebrow>
+              <h2 className="font-display mt-4 text-4xl font-semibold leading-tight text-brand sm:text-5xl">
+                Work that shaped programme decisions
+              </h2>
+            </div>
+            <Link href="/case-studies" className="inline-flex items-center gap-2 font-semibold text-brand hover:text-accent-ink">
+              All case studies <Arrow />
+            </Link>
           </div>
-        </div>
-      </section>
 
-      {/* ================== IMPACT (SSR-safe numbers) ================== */}
-      <section className="bg-gray-50 py-16">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <h2 className="text-center text-3xl font-bold text-emerald-800">Our Impact</h2>
-          {/* Server-rendered numbers for SEO and non-JS users */}
-          <div className="mt-10 grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-6">
-            <div className="rounded-2xl bg-white p-6 text-center shadow-sm ring-1 ring-black/5">
-              <div className="text-3xl font-extrabold text-emerald-700">10+</div>
-              <div className="mt-1 text-gray-600">Countries</div>
-            </div>
-            <div className="rounded-2xl bg-white p-6 text-center shadow-sm ring-1 ring-black/5">
-              <div className="text-3xl font-extrabold text-emerald-700">20+</div>
-              <div className="mt-1 text-gray-600">Dashboards</div>
-            </div>
-            <div className="rounded-2xl bg-white p-6 text-center shadow-sm ring-1 ring-black/5">
-              <div className="text-3xl font-extrabold text-emerald-700">30+</div>
-              <div className="mt-1 text-gray-600">Partners</div>
-            </div>
-            <div className="rounded-2xl bg-white p-6 text-center shadow-sm ring-1 ring-black/5">
-              <div className="text-3xl font-extrabold text-emerald-700">100,000+</div>
-              <div className="mt-1 text-gray-600">People Reached</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ================== PROJECTS (carousel) ================== */}
-      <section id="projects" className="bg-white py-16">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <h2 className="text-center text-3xl font-bold text-emerald-800">Flagship Projects</h2>
-
-          {/* Scroll-snap carousel (keyboard & touch) */}
-          <div className="mt-8 overflow-x-auto scroll-smooth">
-            <div className="flex snap-x snap-mandatory gap-4 pr-4">
-              {PROJECTS.map((p) => (
-                <article
-                  key={p.title}
-                  className="snap-start shrink-0 basis-[87%] sm:basis-[48%] md:basis-[32%] rounded-2xl bg-emerald-50 p-6 text-left shadow-sm ring-1 ring-emerald-900/10"
+          <ul className="mt-12 grid gap-6 md:grid-cols-3">
+            {PROJECTS.map((p) => (
+              <li key={p.title}>
+                <Link
+                  href={p.href}
+                  className="group flex h-full flex-col rounded-2xl bg-white p-7 ring-1 ring-line transition hover:-translate-y-1 hover:shadow-lg"
                 >
-                  <h3 className="text-lg font-semibold text-emerald-900">{p.title}</h3>
-                  <p className="mt-2 text-sm text-emerald-900/80">{p.description}</p>
-                </article>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ================== SERVICES (tabs) ================== */}
-      <section id="services" className="bg-gray-50 py-16">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold text-emerald-800">Our Services</h2>
-
-          <div className="mt-8 flex flex-wrap justify-center gap-2">
-            {SERVICES.map((s, i) => (
-              <button
-                key={s.label}
-                onClick={() => setActiveTab(i)}
-                className={`rounded-full border px-4 py-2 text-sm font-semibold transition ${
-                  activeTab === i
-                    ? "border-emerald-600 bg-emerald-600 text-white"
-                    : "border-black/10 bg-white text-emerald-800 hover:bg-gray-50"
-                }`}
-                aria-pressed={activeTab === i}
-              >
-                {s.label}
-              </button>
+                  <p className="text-xs font-semibold uppercase tracking-[0.14em] text-accent-ink">{p.client}</p>
+                  <h3 className="font-display mt-3 text-2xl font-semibold text-brand">{p.title}</h3>
+                  <p className="mt-3 flex-1 leading-relaxed text-muted">{p.description}</p>
+                  <p className="mt-6 flex items-center justify-between border-t border-line pt-4 text-sm text-muted">
+                    {p.tag}
+                    <span className="text-brand transition group-hover:translate-x-1"><Arrow /></span>
+                  </p>
+                </Link>
+              </li>
             ))}
-          </div>
-
-          <motion.div
-            key={activeTab}
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.35 }}
-            className="mx-auto mt-8 max-w-2xl rounded-2xl bg-white p-6 text-left shadow-sm ring-1 ring-black/5"
-          >
-            <p className="text-gray-700">{SERVICES[activeTab].blurb}</p>
-          </motion.div>
+          </ul>
         </div>
       </section>
 
-      {/* ================== TESTIMONIALS ================== */}
-      <section className="bg-white py-16">
-        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold text-emerald-800">What partners say</h2>
-          <div className="mt-8 rounded-2xl bg-gray-50 p-8 shadow-sm ring-1 ring-black/5">
-            <p className="text-lg text-gray-800">“{TESTIMONIALS[tIndex].quote}”</p>
-            <p className="mt-4 font-semibold text-emerald-800">— {TESTIMONIALS[tIndex].author}</p>
-            <div className="mt-6 flex items-center justify-center gap-2">
-              {TESTIMONIALS.map((_, i) => (
-                <button
-                  key={i}
-                  aria-label={`Go to testimonial ${i + 1}`}
-                  onClick={() => setTIndex(i)}
-                  className={`h-2.5 w-2.5 rounded-full ${tIndex === i ? "bg-emerald-700" : "bg-emerald-200"}`}
-                />
-              ))}
-            </div>
-          </div>
+      {/* =============== TESTIMONIALS =============== */}
+      <section className="mx-auto max-w-6xl px-5 py-20 sm:px-8 sm:py-28">
+        <Eyebrow>What partners say</Eyebrow>
+        <figure className="mt-6 max-w-4xl">
+          <blockquote className="font-display text-3xl font-medium leading-snug text-brand sm:text-5xl sm:leading-[1.15]">
+            “{FEATURED_QUOTE.quote}”
+          </blockquote>
+          <figcaption className="mt-6 text-muted">{FEATURED_QUOTE.author}</figcaption>
+        </figure>
+
+        <div className="mt-16 grid gap-x-12 gap-y-10 md:grid-cols-2">
+          {TESTIMONIALS.map((t) => (
+            <figure key={t.author} className="border-t border-line pt-6">
+              <blockquote className="leading-relaxed text-ink/85">“{t.quote}”</blockquote>
+              <figcaption className="mt-4 text-sm font-semibold text-brand">{t.author}</figcaption>
+            </figure>
+          ))}
         </div>
       </section>
 
-      {/* ================== FAQ ================== */}
-      <section className="bg-gray-50 py-16">
-        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-          <h2 className="text-center text-3xl font-bold text-emerald-800">FAQs</h2>
-          <div className="mt-8 space-y-3">
-            {[
-              {
-                q: "Where do you work?",
-                a: "We are Ghana-incorporated and work across West Africa with public and private clients.",
-              },
-              {
-                q: "What makes DCH different?",
-                a: "We translate evidence into concrete next steps—short cycles, clear outputs, and shared ownership with client teams.",
-              },
-              {
-                q: "How do you handle data security?",
-                a: "Least-privilege access, secure storage, and clear data retention aligned to client requirements.",
-              },
-            ].map((f) => (
-              <details
-                key={f.q}
-                className="rounded-xl bg-white p-5 shadow-sm ring-1 ring-black/5 open:ring-emerald-200"
-              >
-                <summary className="cursor-pointer select-none text-lg font-semibold text-emerald-900">
+      {/* =============== FAQ =============== */}
+      <section className="bg-paper">
+        <div className="mx-auto grid max-w-6xl gap-12 px-5 py-20 sm:px-8 sm:py-28 lg:grid-cols-[0.8fr_1.2fr]">
+          <div>
+            <Eyebrow>FAQs</Eyebrow>
+            <h2 className="font-display mt-4 text-4xl font-semibold leading-tight text-brand sm:text-5xl">
+              Common questions
+            </h2>
+          </div>
+          <div className="divide-y divide-line border-y border-line">
+            {FAQS.map((f) => (
+              <details key={f.q} className="group py-1">
+                <summary className="flex cursor-pointer items-center justify-between gap-6 py-5 text-lg font-semibold">
                   {f.q}
+                  <span className="faq-icon grid h-8 w-8 shrink-0 place-items-center rounded-full ring-1 ring-line transition-transform" aria-hidden>
+                    <svg width="14" height="14" viewBox="0 0 14 14" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round"><path d="M7 1v12M1 7h12" /></svg>
+                  </span>
                 </summary>
-                <p className="mt-3 text-gray-700">{f.a}</p>
+                <p className="pb-6 pr-12 leading-relaxed text-muted">{f.a}</p>
               </details>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ================== CTA ================== */}
-      <section id="contact" className="bg-emerald-900 py-16 text-center text-white">
-        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold">Let’s work together</h2>
-          <p className="mx-auto mt-3 max-w-2xl text-emerald-50/90">
-            Tell us your goal. We’ll propose a simple, phased plan and get you a fast win in weeks—not months.
+      {/* =============== CTA =============== */}
+      <section id="contact" className="bg-brand-deep text-white">
+        <div className="mx-auto max-w-6xl px-5 py-20 sm:px-8 sm:py-28">
+          <h2 className="font-display max-w-3xl text-4xl font-semibold leading-tight sm:text-6xl">
+            Tell us your goal. We’ll propose a phased plan.
+          </h2>
+          <p className="mt-6 max-w-xl text-lg text-white/75">
+            You get a fast win in weeks, not months.
           </p>
-
-          <div className="mx-auto mt-8 max-w-xl rounded-2xl bg-white/10 p-6 ring-1 ring-white/20 backdrop-blur">
-            <div>12 Kenniffe Close, Tema Community 22, Ghana</div>
-            <div className="mt-1">
-              Phone: <a className="underline" href="tel:+233203817101">+233 (0)203 817 101</a>
-            </div>
-            <div className="mt-1">
-              Email: <a className="underline" href="mailto:devchangehub@gmail.com">devchangehub@gmail.com</a>
-            </div>
-            <a
+          <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4">
+            <Link
               href="/contact"
-              className="mt-6 inline-flex items-center rounded-xl bg-orange-500 px-5 py-3 font-semibold text-white hover:bg-orange-600 transition"
+              className="inline-flex items-center gap-2 rounded-full bg-accent px-7 py-3.5 font-semibold text-ink transition hover:bg-[#f08a45]"
             >
-              Start a conversation
+              Start a conversation <Arrow />
+            </Link>
+            <a className="text-white/80 underline-offset-4 hover:underline" href="mailto:devchangehub@gmail.com">
+              devchangehub@gmail.com
+            </a>
+            <a className="text-white/80 underline-offset-4 hover:underline" href="tel:+233203817101">
+              +233 (0)203 817 101
             </a>
           </div>
         </div>
       </section>
-    </div>
+    </>
   );
 }

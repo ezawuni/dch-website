@@ -1,38 +1,54 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const NAV = [
-  { href: "/", label: "Home" },
-  { href: "/case-studies", label: "Case Studies" },
-  // Dashboards hidden until real dashboard links exist (route is app/app/dashboards, see review notes)
+  { href: "/case-studies", label: "Case studies" },
   { href: "/team", label: "Team" },
   { href: "/contact", label: "Contact" },
-  // Careers hidden for now per PRD
 ];
 
 export default function Navbar() {
   const pathname = usePathname();
+  const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => setOpen(false), [pathname]);
+  useEffect(() => {
+    const on = () => setScrolled(window.scrollY > 8);
+    on();
+    window.addEventListener("scroll", on, { passive: true });
+    return () => window.removeEventListener("scroll", on);
+  }, []);
 
   return (
     <header
-      className="sticky top-0 z-40 border-b border-black/5 bg-white/80 dark:bg-neutral-900/80 backdrop-blur supports-[backdrop-filter]:bg-white/60"
-      style={{ height: "64px" }}
+      className={`sticky top-0 z-40 bg-white/90 backdrop-blur transition-shadow ${
+        scrolled || open ? "shadow-[0_1px_0_var(--color-line)]" : ""
+      }`}
     >
-      <nav className="mx-auto max-w-screen-xl px-4 h-16 flex items-center justify-between">
-        <Link href="/" className="shrink-0 font-semibold tracking-tight focus:outline-none focus-visible:ring rounded">
-          DevChangeHub
+      <nav
+        aria-label="Main"
+        className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 sm:px-8"
+      >
+        <Link href="/" className="flex items-center gap-3">
+          <Image src="/logo.png" alt="" width={40} height={28} className="h-7 w-auto" priority />
+          <span className="font-display text-xl font-semibold text-brand">DevChangeHub</span>
         </Link>
-        <ul className="flex items-center gap-1 text-sm sm:gap-5 sm:text-base">
+
+        <ul className="hidden items-center gap-8 md:flex">
           {NAV.map((item) => {
-            const active = pathname === item.href;
+            const active = pathname.startsWith(item.href);
             return (
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className={`px-2 py-1 rounded focus:outline-none focus-visible:ring ${
-                    active ? "text-emerald-700 dark:text-emerald-400" : "text-neutral-700 dark:text-neutral-200"
+                  aria-current={active ? "page" : undefined}
+                  className={`text-sm font-medium transition-colors hover:text-brand ${
+                    active ? "text-brand underline decoration-accent decoration-2 underline-offset-8" : "text-muted"
                   }`}
                 >
                   {item.label}
@@ -40,8 +56,49 @@ export default function Navbar() {
               </li>
             );
           })}
+          <li>
+            <Link
+              href="/contact"
+              className="rounded-full bg-brand px-5 py-2 text-sm font-semibold text-white transition hover:bg-brand-deep"
+            >
+              Work with us
+            </Link>
+          </li>
         </ul>
+
+        <button
+          type="button"
+          className="-mr-2 grid h-11 w-11 place-items-center rounded-lg md:hidden"
+          aria-expanded={open}
+          aria-controls="mobile-menu"
+          aria-label={open ? "Close menu" : "Open menu"}
+          onClick={() => setOpen((v) => !v)}
+        >
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+            {open ? <path d="M5 5l12 12M17 5L5 17" /> : <path d="M3 7h16M3 15h16" />}
+          </svg>
+        </button>
       </nav>
+
+      {open && (
+        <div id="mobile-menu" className="border-t border-line bg-white px-5 pb-6 pt-2 md:hidden">
+          <ul>
+            {NAV.map((item) => (
+              <li key={item.href} className="border-b border-line">
+                <Link href={item.href} className="block py-4 text-lg font-medium text-ink">
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <Link
+            href="/contact"
+            className="mt-5 block rounded-full bg-brand py-3 text-center font-semibold text-white"
+          >
+            Work with us
+          </Link>
+        </div>
+      )}
     </header>
   );
 }
