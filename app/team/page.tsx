@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import PageHeader from "@/components/PageHeader";
+import PhotoPlaceholder from "@/components/PhotoPlaceholder";
 
 export const metadata: Metadata = {
   title: "Our Team",
@@ -24,17 +25,6 @@ export default function Team() {
       bio: "Dr. Alfred Dongzagla is a lecturer and development planning specialist with over a decade of experience in program evaluation, institutional reform, and investment climate analysis. He holds a PhD in Geography (University of Nottingham, UK) and has led and supported research and technical assistance projects for organizations such as UNICEF, GIZ, Catholic Relief Services, CARE International, and the Civil Society Platform on SDGs. Alfred brings a robust background in GIS, mixed-methods research, and strategic analysis across sectors including MSMEs, tourism, social protection, and education, and is recognized for delivering practical, evidence-based solutions to strengthen systems and attract private investment in Ghana."
     },
   ];
-  const initials = (name: string) =>
-    name
-      .replace(/\(.*?\)/g, "")
-      .replace(/,.*$/, "")
-      .replace(/\b(Dr\.?|PhD|MSc\.?)\b/g, "")
-      .trim()
-      .split(/\s+/)
-      .filter(Boolean)
-      .map((w) => w[0])
-      .slice(0, 2)
-      .join("");
   const cleanName = (name: string) => name.replace(/\s*\(.*?\)/g, "").replace(/,.*$/, "");
   const creds = (name: string) => {
     const m = name.match(/\((.*?)\)/);
@@ -54,12 +44,7 @@ export default function Team() {
           {members.map((m) => (
             <li key={m.name} className="grid gap-6 py-10 md:grid-cols-[14rem_1fr] md:gap-12">
               <div>
-                <div
-                  aria-hidden
-                  className="font-display grid h-20 w-20 place-items-center rounded-full bg-brand-soft text-2xl font-semibold text-brand"
-                >
-                  {initials(m.name)}
-                </div>
+                <PhotoPlaceholder label={cleanName(m.name)} />
                 <h2 className="font-display mt-5 text-2xl font-semibold text-brand">{cleanName(m.name)}</h2>
                 {creds(m.name) && <p className="mt-1 text-sm text-muted">{creds(m.name)}</p>}
               </div>
