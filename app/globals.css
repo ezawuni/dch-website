@@ -87,8 +87,9 @@ details[open] .faq-icon { transform: rotate(45deg); }
 }
 
 /* route change fade */
+/* starts partly visible so the browser counts content as painted right away (LCP) */
 @keyframes page-in {
-  from { opacity: 0; transform: translateY(10px); }
+  from { opacity: 0.35; transform: translateY(10px); }
   to { opacity: 1; transform: none; }
 }
 .page-in { animation: page-in 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
@@ -151,9 +152,24 @@ details[open]::details-content { block-size: auto; }
 }
 
 /* slow shimmer on the hero edge light */
+/* pulses the hero grid between faint and slightly less faint */
 @keyframes sheen {
-  0%, 100% { opacity: 0.55; }
-  50% { opacity: 0.9; }
+  0%, 100% { opacity: 0.035; }
+  50% { opacity: 0.075; }
 }
 .sheen { animation: sheen 9s ease-in-out infinite; }
 @media (prefers-reduced-motion: reduce) { .sheen { animation: none; } }
+
+/* hero headline: slide only, no fade, so it counts as painted immediately (LCP) */
+@keyframes rise-y {
+  from { transform: translateY(14px); }
+  to { transform: none; }
+}
+.rise-y { animation: rise-y 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+@media (prefers-reduced-motion: reduce) { .rise-y { animation: none; } }
+
+/* italic emphasis inside serif headings uses the separately loaded italic face */
+.font-display .italic,
+.font-display.italic {
+  font-family: var(--font-serif-italic), var(--font-serif), Georgia, serif;
+}

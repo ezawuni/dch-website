@@ -23,7 +23,7 @@ export default function Contact() {
   }
 
   const field =
-    "mt-2 w-full rounded-lg border border-line bg-white px-4 py-3 text-base outline-none transition focus:border-brand focus:ring-2 focus:ring-brand/20";
+    "mt-2 w-full rounded-lg border border-line bg-white px-4 py-3 text-base font-normal outline-none transition focus:border-brand focus:ring-2 focus:ring-brand/20";
 
   return (
     <>
@@ -39,15 +39,50 @@ export default function Contact() {
               <p className="mt-3 text-ink/80">We’ve received your message and will be in touch soon.</p>
             </div>
           ) : (
-            <form className="space-y-6" onSubmit={onSubmit}>
-              <label className="block text-sm font-semibold">
-                Your name
-                <input name="name" autoComplete="name" className={field} required />
-              </label>
-              <label className="block text-sm font-semibold">
-                Your email
-                <input name="email" type="email" autoComplete="email" className={field} required />
-              </label>
+            <form className="relative space-y-6" onSubmit={onSubmit}>
+              <input type="hidden" name="_subject" value="New enquiry from devchangehub.com" />
+              {/* Spam trap: hidden from people, bots fill it in and Formspree discards the message */}
+              <div aria-hidden className="absolute -left-[9999px] h-px w-px overflow-hidden">
+                <label>
+                  Leave this empty
+                  <input type="text" name="_gotcha" tabIndex={-1} autoComplete="off" />
+                </label>
+              </div>
+              <div className="grid gap-6 sm:grid-cols-2">
+                <label className="block text-sm font-semibold">
+                  Your name
+                  <input name="name" autoComplete="name" className={field} required />
+                </label>
+                <label className="block text-sm font-semibold">
+                  Your email
+                  <input name="email" type="email" autoComplete="email" className={field} required />
+                </label>
+              </div>
+              <div className="grid gap-6 sm:grid-cols-2">
+                <label className="block text-sm font-semibold">
+                  Organisation <span className="font-normal text-muted">(optional)</span>
+                  <input name="organisation" autoComplete="organization" className={field} />
+                </label>
+                <label className="block text-sm font-semibold">
+                  What do you need?
+                  <span className="relative block">
+                    <select name="service" defaultValue="" className={`${field} appearance-none pr-10`}>
+                      <option value="" disabled>
+                        Choose one
+                      </option>
+                      <option>Evaluation and MEL</option>
+                      <option>Surveys and data collection</option>
+                      <option>Dashboards and data systems</option>
+                      <option>Technical assistance</option>
+                      <option>Advisory</option>
+                      <option>Something else</option>
+                    </select>
+                    <svg aria-hidden width="12" height="8" viewBox="0 0 12 8" className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-muted">
+                      <path d="M1 1l5 5 5-5" stroke="currentColor" strokeWidth="1.6" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </span>
+                </label>
+              </div>
               <label className="block text-sm font-semibold">
                 How can we help?
                 <textarea name="message" rows={6} className={field} required />

@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { CASE_STUDIES, getCaseStudyBySlug } from "@/lib/case-studies";
 import Pattern, { patternFor } from "@/components/Pattern";
+import Reveal from "@/components/Reveal";
 
 export const dynamicParams = false;
 
@@ -30,16 +31,29 @@ export default async function CaseStudyDetail(
 
   return (
     <>
-      <section className="relative overflow-hidden bg-brand-deep text-white">
-        <Pattern variant={patternFor(c.slug)} className="pointer-events-none absolute inset-y-0 right-0 hidden h-full w-1/2 opacity-60 [mask-image:linear-gradient(to_right,transparent,#000_70%)] md:block" />
-        <div className="relative mx-auto max-w-6xl px-5 py-14 sm:px-8 sm:py-20">
-          <Link href="/case-studies" className="text-sm text-white/70 hover:text-white">
-            ← All case studies
-          </Link>
-          <p className="mt-8 text-xs font-semibold uppercase tracking-[0.16em] text-accent">{c.sector}</p>
-          <h1 className="font-display mt-4 max-w-4xl text-4xl font-semibold leading-tight sm:text-5xl">
-            {c.title}
-          </h1>
+      <section className="px-3 pt-3 sm:px-5 sm:pt-5">
+        <div className="relative overflow-hidden rounded-[1.75rem] bg-brand-deep text-white sm:rounded-[2.25rem]">
+          <div
+            aria-hidden
+            className="absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(55% 100% at 95% 0%, rgba(232,116,42,0.25), transparent 62%), radial-gradient(45% 80% at 0% 100%, rgba(242,184,75,0.12), transparent 60%)",
+            }}
+          />
+          <Pattern
+            variant={patternFor(c.slug)}
+            className="pointer-events-none absolute inset-y-0 right-0 hidden h-full w-1/2 opacity-60 [mask-image:linear-gradient(to_right,transparent,#000_70%)] md:block"
+          />
+          <div className="relative mx-auto max-w-6xl px-6 py-14 sm:px-10 sm:py-20">
+            <Link href="/case-studies" className="text-sm text-white/75 transition-colors hover:text-white">
+              ← All case studies
+            </Link>
+            <p className="mt-8 text-xs font-semibold uppercase tracking-[0.16em] text-accent">{c.sector}</p>
+            <h1 className="font-display mt-4 max-w-4xl text-4xl font-semibold leading-tight sm:text-5xl">
+              {c.title}
+            </h1>
+          </div>
         </div>
       </section>
 
@@ -94,6 +108,29 @@ export default async function CaseStudyDetail(
           </Link>
         </aside>
       </div>
+
+      <section className="bg-sage">
+        <div className="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-20">
+          <h2 className="font-display text-3xl font-semibold text-brand">More case studies</h2>
+          <ul className="mt-8 grid gap-6 md:grid-cols-3">
+            {CASE_STUDIES.filter((o) => o.slug !== c.slug).map((o, i) => (
+              <Reveal as="li" delay={i * 110} key={o.slug}>
+                <Link
+                  href={`/case-studies/${o.slug}`}
+                  className="group flex h-full flex-col overflow-hidden rounded-2xl bg-white ring-1 ring-line transition duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:shadow-brand/10"
+                >
+                  <Pattern variant={patternFor(o.slug)} className="h-28 w-full transition-transform duration-700 group-hover:scale-105" />
+                  <div className="flex flex-1 flex-col p-6">
+                    <p className="text-xs font-semibold uppercase tracking-[0.14em] text-accent-ink">{o.sector}</p>
+                    <h3 className="font-display mt-2 text-xl font-semibold text-brand">{o.title}</h3>
+                    <p className="mt-auto pt-4 text-sm text-muted">{o.client}</p>
+                  </div>
+                </Link>
+              </Reveal>
+            ))}
+          </ul>
+        </div>
+      </section>
     </>
   );
 }

@@ -2,7 +2,8 @@ import Link from "next/link";
 import Reveal from "@/components/Reveal";
 import CountUp from "@/components/CountUp";
 import Pattern, { patternFor } from "@/components/Pattern";
-import GhanaMap, { GhanaOutline } from "@/components/GhanaMap";
+import GhanaMap from "@/components/GhanaMap";
+import GhanaOutline from "@/components/GhanaOutline";
 
 /* -------------------- Editable content -------------------- */
 const CLIENTS = [
@@ -184,7 +185,7 @@ export default function Home() {
               <div className="rise">
                 <Eyebrow light>Evidence and data consultancy · Ghana</Eyebrow>
               </div>
-              <h1 className="font-display rise rise-2 mt-5 text-[2.7rem] font-semibold leading-[1.03] sm:text-6xl lg:text-[4.6rem]">
+              <h1 className="font-display rise-y mt-5 text-[2.7rem] font-semibold leading-[1.03] sm:text-6xl lg:text-[4.6rem]">
                 Powering development through <span className="draw-underline italic text-gold">evidence</span> across Africa.
               </h1>
               <p className="rise rise-3 mt-6 max-w-xl text-lg leading-relaxed text-white/80">

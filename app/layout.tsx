@@ -16,7 +16,15 @@ const serif = Fraunces({
   variable: "--font-serif",
   subsets: ["latin"],
   axes: ["opsz"],
-  style: ["normal", "italic"],
+});
+
+// Italic is only used for a word or two of emphasis, so it loads after the page
+// instead of competing with the main content.
+const serifItalic = Fraunces({
+  variable: "--font-serif-italic",
+  subsets: ["latin"],
+  style: "italic",
+  preload: false,
 });
 
 const SITE_URL = "https://www.devchangehub.com";
@@ -36,13 +44,11 @@ export const metadata: Metadata = {
     url: SITE_URL,
     title: DEFAULT_TITLE,
     description: DEFAULT_DESCRIPTION,
-    images: [{ url: "/logo.png", alt: "DevChangeHub logo" }],
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: DEFAULT_TITLE,
     description: DEFAULT_DESCRIPTION,
-    images: ["/logo.png"],
   },
 };
 
@@ -69,7 +75,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body
-        className={`${geistSans.variable} ${serif.variable} antialiased`}
+        className={`${geistSans.variable} ${serif.variable} ${serifItalic.variable} antialiased`}
       >
         <script
           type="application/ld+json"
