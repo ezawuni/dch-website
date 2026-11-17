@@ -1,27 +1,63 @@
 // app/layout.tsx
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Fraunces } from "next/font/google";
 import "./globals.css";
 
-// ⬇️ Add these imports (they point to files you created in /components)
 import SkipLink from "@/components/SkipLink";
 import Navbar from "@/components/Navbar";
-import ScrollProgress from "@/components/ScrollProgress";
+import Footer from "@/components/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const serif = Fraunces({
+  variable: "--font-serif",
   subsets: ["latin"],
+  axes: ["opsz"],
 });
 
+const SITE_URL = "https://www.devchangehub.com";
+const SITE_NAME = "DevChangeHub";
+const DEFAULT_TITLE = "DevChangeHub | Powering Development Through Evidence Across Africa";
+const DEFAULT_DESCRIPTION =
+  "DevChangeHub is a Ghana-based evidence and data consultancy. We deliver evaluations, surveys, dashboards and technical assistance for governments, donors and businesses across West Africa.";
+
 export const metadata: Metadata = {
-  title: "DevChangeHub | Powering Development Through Evidence Across Africa",
-  description:
-    "DevChangeHub connects data, evidence, and action for impactful development in Africa.",
+  metadataBase: new URL(SITE_URL),
+  title: { default: DEFAULT_TITLE, template: "%s | DevChangeHub" },
+  description: DEFAULT_DESCRIPTION,
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    siteName: SITE_NAME,
+    url: SITE_URL,
+    title: DEFAULT_TITLE,
+    description: DEFAULT_DESCRIPTION,
+    images: [{ url: "/logo.png", alt: "DevChangeHub logo" }],
+  },
+  twitter: {
+    card: "summary",
+    title: DEFAULT_TITLE,
+    description: DEFAULT_DESCRIPTION,
+    images: ["/logo.png"],
+  },
+};
+
+const orgJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "Development Change Hub (DevChangeHub)",
+  url: SITE_URL,
+  logo: `${SITE_URL}/logo.png`,
+  email: "devchangehub@gmail.com",
+  telephone: "+233203817101",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "12 Kenniffe Close, Tema Community 22",
+    addressCountry: "GH",
+  },
 };
 
 export default function RootLayout({
@@ -32,21 +68,22 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white text-neutral-900`}
+        className={`${geistSans.variable} ${serif.variable} antialiased`}
       >
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
+        />
+
         {/* Accessibility: Tab once to reveal this, jumps to <main id="main"> */}
         <SkipLink />
-
-        {/* Sticky glassy navbar with focus styles */}
         <Navbar />
 
-        {/* Thin orange bar that shows scroll progress (sits under navbar) */}
-        <ScrollProgress />
-
-        {/* Main content target for the skip-link */}
-        <main id="main" className="min-h-screen">
+        <main id="main">
           {children}
         </main>
+
+        <Footer />
       </body>
     </html>
   );
